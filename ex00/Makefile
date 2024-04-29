@@ -1,4 +1,4 @@
-NAME = convert
+NAME = btc
 CC = c++
 RM = rm -f
 
