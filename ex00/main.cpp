@@ -9,6 +9,7 @@ int main(int ac, char *av[])
             throw std::invalid_argument("should pass input file");
         exchange.parseDataBase("./data.csv");
         exchange.processInputFile(av[1]);
+        exchange.print();
     }
     catch(const std::exception& e)
     {

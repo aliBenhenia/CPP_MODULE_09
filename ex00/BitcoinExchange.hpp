@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include <fstream>
-#include <vector>
+#include <sstream>
 #include <stdexcept>// This header is part of the error handling library.
 
 struct Date {
@@ -24,6 +24,17 @@ struct Date {
         this->month = mt;
         this->day   = dy;
     }
+    int getYear() const {
+        return year;
+    }
+
+    int getMonth() const {
+        return month;
+    }
+
+    int getDay() const {
+        return day;
+    }
     bool operator<(Date& other) const 
     {
         if (year != other.year) return year < other.year;
@@ -35,7 +46,7 @@ struct Date {
 class BitcoinExchange
 {
     private:
-        std::map<Date, double> btc_db;
+        std::map<std::string, double> btc_db;
     public:
         BitcoinExchange();
         BitcoinExchange(BitcoinExchange &obj);
@@ -43,6 +54,12 @@ class BitcoinExchange
         // member fucntions
         void parseDataBase(std::string db);
         void processInputFile(std::string inputFile);
+        void print()
+        {
+            for (std::map<std::string, double>::iterator it = btc_db.begin(); it != btc_db.end(); ++it) {
+            std::cout << it->first << ": " << it->second << std::endl;
+            }
+        }
         ~BitcoinExchange();
        
 };

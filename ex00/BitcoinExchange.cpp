@@ -22,9 +22,7 @@ void BitcoinExchange :: parseDataBase(std::string db)
 {
     std::ifstream   fileDb;
     std::string     line;
-    Date            date; // construct data with -1 
-    double          value;
-    std::string     dateString;
+    std::string     date;
     size_t          pos;
 
     fileDb.open(db);
@@ -36,29 +34,19 @@ void BitcoinExchange :: parseDataBase(std::string db)
         pos = line.find(',');
         if (pos != std::string::npos) // check is valid pos
         {
-            dateString = line.substr(0, pos);
-            line.erase(0, pos + 1);
-            pos = dateString.find('-');
-            if (pos != std::string::npos)
+            std::stringstream ss(line);
+            std::string date_str, price_str;
+            if (std::getline(ss, date_str, ',') && getline(ss, price_str, ','))
             {
-                date.year = std::atoi(dateString.substr(0, pos).c_str());
-                dateString.erase(0, pos + 1);
-                pos = dateString.find('-');
-                if (pos != std::string::npos)
-                {
-                    date.month = std::atoi(dateString.substr(0 , pos).c_str());
-                    dateString.erase(0, pos + 1);
-                    date.day = std::atoi(dateString.substr(0 , pos).c_str());
-                    value = std::atof(line.c_str());
-                    this->btc_db[date] = value;
-                }
+                char* endPtr;
+                double price = std::strtod(price_str.c_str(), &endPtr);
+                if (endPtr == NULL)
+                     throw std::runtime_error("error : fail conversion");
+                this->btc_db[date_str] = price;
             }
         }
-
     }
-    // at end close it
     fileDb.close();
-    
 }
 void BitcoinExchange :: processInputFile(std::string db)
 {
