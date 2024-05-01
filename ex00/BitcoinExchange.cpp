@@ -17,6 +17,15 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange &obj)
     std::cout << "copy assignement" << std::endl;
     return (*this);
 }
+// member functions
+void BitcoinExchange :: parseDataBase(std::string db)
+{
+    
+}
+void BitcoinExchange :: processInputFile(std::string db)
+{
+    
+}
 
 BitcoinExchange::~BitcoinExchange()
 {
