@@ -29,9 +29,10 @@ class BitcoinExchange
         {
            // std::cout << "print" << std::endl;
             for (std::map<std::string, double>::iterator it = btc_db.begin(); it != btc_db.end(); ++it)
-                std::cout << it->first << " => " << it->second << std::endl;
+                std::cout << "(" << it->first << ")"<< std::endl;
         }
         ~BitcoinExchange();
        
 };
+
 #endif

@@ -1,4 +1,11 @@
 #include "BitcoinExchange.hpp"
+std::string trimDate(const std::string& str, const std::string& chars = " \t\n\r") {
+   // rm  spaces from the beginning
+    size_t start = str.find_first_not_of(chars);
+    if (start == std::string::npos)
+        return "";
+    return str.substr(start, str.find_last_not_of(chars) - start + 1);
+}
 
 BitcoinExchange::BitcoinExchange()
 {
@@ -49,6 +56,7 @@ void BitcoinExchange :: parseDataBase(std::string db)
     }
     fileDb.close();
 }
+
 double BitcoinExchange :: getClosestValue(std::string date)
 {
     std::map<std::string, double>::iterator it = btc_db.begin();
@@ -61,8 +69,13 @@ double BitcoinExchange :: getClosestValue(std::string date)
     }
     return closestValue;
 }
+
 bool BitcoinExchange::checkValidDate(std::string date)
 {
+    // should trim date string by removing spaces from the beginning and the end
+    // date = trimDate(date);
+    // date += " ";    
+    // std::cout << "(" << date << ")" << std::endl;
     // hndle leap year and month
     // leap year
     if (date[5] == '0' && date[6] == '2' && date[8] == '2' && date[9] == '9')
