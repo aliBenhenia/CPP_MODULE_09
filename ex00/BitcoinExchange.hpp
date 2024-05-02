@@ -20,6 +20,11 @@ class BitcoinExchange
         // member fucntions
         void parseDataBase(std::string db);
         void processInputFile(std::string inputFile);
+        double getClosestValue(std::string date);
+        bool checkValidDate(std::string date);
+        bool checkValidFormat(std::string line);
+        bool checkValidValue(double value);
+        void diplayResult(std::string date, double value);
         void print()
         {
            // std::cout << "print" << std::endl;
