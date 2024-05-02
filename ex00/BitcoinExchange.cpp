@@ -63,17 +63,6 @@ void BitcoinExchange :: processInputFile(std::string db)
     std::getline(fileDb, line); // ignore header
     if (line.empty())
         throw std::runtime_error("error : empty file");
-    // check header 
-    // date | value
-// 2011-01-03 | 3
-// 2011-01-03 | 2
-// 2011-01-03 | 1
-// 2011-01-03 | 1.2
-// 2011-01-09 | 1
-// 2012-01-11 | -1
-// 2001-42-42
-// 2012-01-11 | 1
-// 2012-01-11 | 2147483648
     if (line.find('|') == std::string::npos)
         throw std::runtime_error("error : bad header");
     while (std::getline(fileDb, line))
