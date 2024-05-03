@@ -12,6 +12,9 @@ class RBN
         RBN();
         RBN(const RBN &other);
         RBN &operator=(const RBN &other);
+        void start(std::string expression);
+        void calculeNumbers(char c);
+        // bool checkIsValid(std::string expression);
         ~RBN();
 };
 
