@@ -18,20 +18,46 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 
 bool PmergeMe::parseNumbers(std::string input)
 {
-    (void)input;
+    std::string number;
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        if (input[i] == ' ')
+        {
+            if (number.size() == 0)
+                continue;
+            numbers.push_back(std::stoi(number));
+            number.clear();
+        }
+        else if (input[i] == '|')
+        {
+            if (number.size() == 0)
+                continue;
+            numbers.push_back(std::stoi(number));
+            number.clear();
+            break;
+        }
+        else if (input[i] >= '0' && input[i] <= '9')
+        {
+            number += input[i];
+        }
+        else
+        {
+            return (false);
+        }
+    }
     return (true);
 }
 
 // alg Ford-Johnson algorithm merge-insert sort algorithm
 void PmergeMe::SortPairs()
 {
-    size i = 0;
+    size_t i = 0;
     if (numbers.size() % 2 != 0)
     {
         this->lastNumber = numbers[numbers.size() - 1];
         numbers.pop_back();
     }
-    while (i < numbers.size() - 1)
+    while (i < numbers.size())
     {
         if (numbers[i] > numbers[i + 1])
             std::swap(numbers[i], numbers[i + 1]);
@@ -41,7 +67,7 @@ void PmergeMe::SortPairs()
 
 void PmergeMe::printNumbers()
 {
-    for (int i = 0; i < numbers.size(); i++)
+    for (size_t i = 0; i < numbers.size(); i++)
     {
         std::cout << numbers[i] << " ";
     }
