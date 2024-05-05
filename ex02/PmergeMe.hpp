@@ -1,21 +1,21 @@
-#ifndef RPNEVAL_HPP
-#define RPNEVAL_HPP
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
 #include <iostream>
-#include <string>
-#include <stack>
+#include <vector>
+#include <deque>
 
-class RBN
+
+class PmergeMe
 {
     private:
-        std::stack<int> numbers;
+        std::vector<int> numbers;
     public:
-        RBN();
-        RBN(const RBN &other);
-        RBN &operator=(const RBN &other);
-        void start(std::string expression);
-        void calculeNumbers(char c);
-        // bool checkIsValid(std::string expression);
-        ~RBN();
+        PmergeMe();
+        PmergeMe(const PmergeMe &other);
+        PmergeMe &operator=(const PmergeMe &other);
+        void start();
+        ~PmergeMe();
 };
+
 
 #endif
