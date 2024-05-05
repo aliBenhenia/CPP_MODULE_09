@@ -48,7 +48,7 @@ void BitcoinExchange :: parseDataBase(std::string db)
             std::istringstream iss(price_str);
             if (!(iss >> value))
             {
-                std::cerr << "Error: failed to parse value for line => " << line << std::endl;
+                std::cout << "Error: failed to parse value for line => " << line << std::endl;
                 continue;
             }
             btc_db[date_str] = value;
@@ -69,56 +69,81 @@ double BitcoinExchange :: getClosestValue(std::string date)
     }
     return closestValue;
 }
+bool isValidDateFormat(std::string date)
+{
+    if (date < "2009-01-02" || date > "2022-03-29")
+        return (false);
+    if (date.length() != 11)
+        return (false);
+    if (date[4] != '-' || date[7] != '-')
+        return (false);
+    return ((true));
+}
+
+Date parseDateStr(std::string date)
+{
+    Date dateObj;
+    std::string year = date.substr(0, 4);
+    std::string month = date.substr(5, 2);
+    std::string day = date.substr(8, 2);
+    dateObj.year = std::atoi(year.c_str());
+    dateObj.month = std::atoi(month.c_str());
+    dateObj.day = std::atoi(day.c_str());
+    return (dateObj);
+}
 
 bool BitcoinExchange::checkValidDate(std::string date)
 {
-    // should trim date string by removing spaces from the beginning and the end
-    // date = trimDate(date);
-    // date += " ";    
-    // std::cout << "(" << date << ")" << std::endl;
-    // hndle leap year and month
+    if(isValidDateFormat(date) == (false))
+        return (false);
+    Date dateObj = parseDateStr(date);
+    if (isYear(dateObj.year) == (false) || isMonth(dateObj.month) == (false))
+        return (false);
     // leap year
-    if (date[5] == '0' && date[6] == '2' && date[8] == '2' && date[9] == '9')
+    if (dateObj.year % 4 == 0 && dateObj.month == 2) // month is feb == 2
     {
-        if (date[0] != '2' || date[1] != '0')
-            return false;
-        if (date[2] != '0' || date[3] != '4')
-            return false;
-        return true;
+        if (dateObj.day < 1 || dateObj.day > 29)
+            return (false);
     }
-    if (date[4] != '-' || date[7] != '-')
-        return false;
-    for (int i = 0; i < 10; i++)
+    else if (dateObj.month == 2)
     {
-        if (i == 4 || i == 7)
-            continue;
-        if (date[i] < '0' || date[i] > '9')
-            return false;
+        if (dateObj.day < 1 || dateObj.day > 28)
+            return (false); // ivnalid day for month in non leap year
     }
-    return true;
+    if (isMonthsWith31Days(dateObj.month) == (true))
+    {
+        if (dateObj.day < 1 || dateObj.day > 31)
+            return (false);
+    }
+    else if (isMonthsWith30Days(dateObj.month) == (true))
+    {
+        if (dateObj.day < 1 || dateObj.day > 30)
+            return (false);
+    }
+    return (true);
 }
 bool BitcoinExchange::checkValidFormat(std::string line)
 {
     size_t pos = line.find('|');
     if (pos == std::string::npos)
-        return false;
+        return (false);
     if (pos == 0 || pos == line.length() - 1)
-        return false;
-    return true;
+        return (false);
+    return (true);
 }
 bool BitcoinExchange::checkValidValue(double value)
 {
     if (value < 0)
     {
-        std::cerr << "Error: not a positive number"  << std::endl;
-        return false;
+        std::cout << "Error: not a positive number"  << std::endl;
+        return (false);
     }
     if (value > 1000)
     {
-        std::cerr << "Error: too large a number"  << std::endl;
-        return false;
+        std::cout << "Error: too large a number"  << std::endl;
+        return (false);
     }
-    return true;
+    return (true);
 }
 
 void BitcoinExchange::diplayResult(std::string date, double value)
@@ -146,24 +171,24 @@ void BitcoinExchange :: processInputFile(std::string db)
     while (std::getline(fileDb, line))
     {
         pos = line.find('|');
-        if (checkValidFormat(line) == false)
+        if (checkValidFormat(line) == (false))
         {
-            std::cerr << "Error: bad input =>" << line << std::endl;
+            std::cout << "Error: bad input =>" << line << std::endl;
             continue;
         }
-        if (checkValidDate(line.substr(0, pos)) == false)
+        if (checkValidDate(line.substr(0, pos)) == (false))
         {
-            std::cerr << "Error: bad date =>" << line << std::endl;
+            std::cout << "Error: bad date =>" << line << std::endl;
             continue;
         }
         std::string value_str = line.substr(pos + 1);
         std::istringstream iss(value_str);
         if (!(iss >> value))
         {
-            std::cerr << "Error: failed to parse value for line => " << line << std::endl;
+            std::cout << "Error: failed to parse value for line => " << line << std::endl;
             continue;
         }
-        if (checkValidValue(value) == false)
+        if (checkValidValue(value) == (false))
             continue;
        diplayResult(line.substr(0, pos), value);
     }

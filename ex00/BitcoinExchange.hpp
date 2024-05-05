@@ -8,6 +8,18 @@
 #include <sstream>
 #include <stdexcept>// This header is part of the error handling library.
 
+#define isMonth(x) (x >= 1 && x <= 12)
+#define isYear(x) (x >= 2009 && x <= 2022)
+#define isDay(x) (x >= 1 && x <= 31)
+#define isMonthsWith31Days(x) (x == 1 || x == 3 || x == 5 || x == 7 || x == 8 || x == 10 || x == 12)
+#define isMonthsWith30Days(x) (x == 4 || x == 6 || x == 9 || x == 11)
+
+struct Date
+{
+    int day;
+    int month;
+    int year;
+};
 
 class BitcoinExchange
 {
