@@ -19,32 +19,28 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 bool PmergeMe::parseNumbers(std::string input)
 {
     std::string number;
-    for (size_t i = 0; i < input.size(); i++)
+    size_t i = 0;
+
+    while (i < input.size())
     {
         if (input[i] == ' ')
         {
-            if (number.size() == 0)
-                continue;
-            numbers.push_back(std::stoi(number));
-            number.clear();
+            if (number.size() > 0)
+            {
+                numbers.push_back(std::stoi(number));
+                number.clear();
+            }
         }
-        else if (input[i] == '|')
-        {
-            if (number.size() == 0)
-                continue;
-            numbers.push_back(std::stoi(number));
-            number.clear();
-            break;
-        }
-        else if (input[i] >= '0' && input[i] <= '9')
-        {
+        else if (std::isdigit(input[i]) || input[i] == '-')
             number += input[i];
-        }
         else
-        {
             return (false);
-        }
+        i++;
     }
+    if (number.size() > 0)
+        numbers.push_back(std::stoi(number));
+    if (numbers.size() == 0)
+        return (false);
     return (true);
 }
 
@@ -54,7 +50,7 @@ void PmergeMe::SortPairs()
     size_t i = 0;
     if (numbers.size() % 2 != 0)
     {
-        this->lastNumber = numbers[numbers.size() - 1];
+        this->lastNumber = numbers.back();
         numbers.pop_back();
     }
     while (i < numbers.size())
