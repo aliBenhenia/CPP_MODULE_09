@@ -4,12 +4,14 @@
 #include <vector>
 #include <deque>
 #include <string>
+#include <utility>
 
 
 class PmergeMe
 {
     private:
         std::vector<int> numbers;
+        std::vector<std::pair<int, int> > PairNumbers;
         int lastNumber;
     public:
         PmergeMe();
@@ -18,6 +20,7 @@ class PmergeMe
         void start(std::string input);
         bool parseNumbers(std::string input);
         void SortPairs();
+        void splitPairs();
         void printNumbers();
         ~PmergeMe();
 };

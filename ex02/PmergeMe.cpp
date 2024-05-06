@@ -61,15 +61,28 @@ void PmergeMe::SortPairs()
     }
 }
 
+void PmergeMe::splitPairs()
+{
+    size_t i = 0;
+
+    while (i < numbers.size())
+    {
+        PairNumbers.push_back(std::make_pair(numbers[i], numbers[i + 1]));
+        i += 2;
+    }
+}
+
 void PmergeMe::printNumbers()
 {
-    for (size_t i = 0; i < numbers.size(); i++)
+    size_t i = 0;
+
+    while (i < PairNumbers.size())
     {
-        std::cout << numbers[i] << " ";
+        std::cout << PairNumbers[i].first << " " << PairNumbers[i].second << std::endl;
+        i++;
     }
     if (lastNumber != 0)
-        std::cout << lastNumber;
-    std::cout << std::endl;
+        std::cout << lastNumber << std::endl;
 }
 
 void PmergeMe::start(std::string input)
@@ -80,7 +93,7 @@ void PmergeMe::start(std::string input)
         return;
     }
     SortPairs();
-    
+    splitPairs();
 }
 
 
