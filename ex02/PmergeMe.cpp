@@ -79,7 +79,8 @@ void PmergeMe::start(std::string input)
         std::cout << "invalid input ...plz enter correct input" << std::endl;
         return;
     }
-    SortPairs(); 
+    SortPairs();
+    
 }
 
 
