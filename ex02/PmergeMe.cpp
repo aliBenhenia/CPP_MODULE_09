@@ -72,6 +72,23 @@ void PmergeMe::splitPairs()
     }
 }
 
+void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
+{
+    
+}
+
+void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
+{
+    int mid;
+
+    if (start >= end)// base case for recursion when the array is divided into single element
+        return;
+    mid = (start + end) / 2; // for divide the array into two parts 
+    MergeSortPair(PairNumbers, start, mid); // for left part of array .. recursive call .. divide and conquer
+    MergeSortPair(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
+    Merge(PairNumbers, start, mid, end); // merge the two parts of array .. conquer .. merge  the two parts of array 
+}
+
 void PmergeMe::printNumbers()
 {
     size_t i = 0;
@@ -94,10 +111,10 @@ void PmergeMe::start(std::string input)
     }
     SortPairs();
     splitPairs();
+    MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
 }
 
 
 PmergeMe::~PmergeMe()
 {
-
 }
