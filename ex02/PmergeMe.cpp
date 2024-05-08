@@ -74,7 +74,44 @@ void PmergeMe::splitPairs()
 
 void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
 {
-    
+
+// for the first part of array and second part of array..so objectif is to merge the two parts of array
+    size_t i = 0;
+    size_t j = 0;
+
+    while (i < mid - start + 1)// copy the first part of array to first vector
+    {
+        first.push_back(PairNumbers[start + i].first); // copy the first part of array to first vector
+        second.push_back(PairNumbers[start + i].second); // copy the second part of array to second vector
+        i++;
+    }
+    while (j < end - mid)  // copy the second part of array to second vector
+    {
+        first.push_back(PairNumbers[mid + 1 + j].first); // copy the first part of array to first vector
+        second.push_back(PairNumbers[mid + 1 + j].second); // copy the second part of array to second vector
+        j++;
+    }
+    // merge the two parts of array
+    i = 0;
+    j = 0;
+    size_t k = start;
+    while (i < first.size() && j < second.size())
+    {
+        if (first[i] <= second[j]) // compare the two parts of array and merge them
+        {
+            PairNumbers[k].first = first[i];
+            PairNumbers[k].second = second[i]; 
+            i++;
+        }
+        else
+        {
+            PairNumbers[k].first = second[j];
+            PairNumbers[k].second = first[j];
+            j++;
+        }
+        k++;
+    }
+   
 }
 
 void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
