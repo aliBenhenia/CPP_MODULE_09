@@ -12,8 +12,8 @@ class PmergeMe
     private:
         std::vector<int> numbers;
         std::vector<std::pair<int, int> > PairNumbers;
-        std::vector<int> first;
-        std::vector<int> second;
+        std::vector<std::pair<int, int> > first;
+        std::vector<std::pair<int, int> > second;
         std::vector<int> sorted;
         int lastNumber;
 
