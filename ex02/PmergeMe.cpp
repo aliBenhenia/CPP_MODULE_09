@@ -92,34 +92,32 @@ void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t star
         j++;
     }
     // merge the two parts of array
-    i = 0;
-    j = 0;
-    while (start <= end)
+    i = 0; // for the first part of array
+    j = 0; // for the second part of array
+    while (start <= end) // for the two parts of array
     {
-        if (i == first.size())
+        if (i == first.size()) // if the first part of array is empty
         {
-            PairNumbers[start] = second[j];
-            j++;
+            PairNumbers[start] = second[j]; // copy the second part of array into the main array
+            j++; // increment the index of the second part of array
         }
-        else if (j == second.size())
+        else if (j == second.size()) // if the second part of array is empty
         {
-            PairNumbers[start] = first[i];
+            PairNumbers[start] = first[i]; // copy the first part of array into the main array
             i++;
         }
-        else if (first[i].first < second[j].first)
+        else if (first[i].first < second[j].first) // if the first element of first part of array is less than the first element of second part of array 
         {
-            PairNumbers[start] = first[i];
-            i++;
+            PairNumbers[start] = first[i]; // copy the first element of first part of array into the main array
+            i++; // increment the index of the first part of array
         }
         else
         {
-            PairNumbers[start] = second[j];
-            j++;
+            PairNumbers[start] = second[j]; // copy the first element of second part of array into the main array
+            j++; // increment the index of the second part of array
         }
-        start++;
+        start++; // increment the index of the main array
     }
-    first.clear();
-    second.clear();
 }
 
 void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
