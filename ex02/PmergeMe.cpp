@@ -136,6 +136,41 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
     MergeSortPair(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
     Merge(PairNumbers, start, mid, end); // merge the two parts of array .. conquer .. merge  the two parts of array 
 }
+void PmergeMe::fillMainChainAndPend()
+{
+    size_t i = 0;
+    size_t j = 0;
+
+    while (i < first.size() && j < second.size())
+    {
+        if (first[i].second < second[j].second)
+        {
+            mainChain.push_back(first[i].first);
+            mainChain.push_back(first[i].second);
+            i++;
+        }
+        else
+        {
+            mainChain.push_back(second[j].first);
+            mainChain.push_back(second[j].second);
+            j++;
+        }
+    }
+    while (i < first.size())
+    {
+        mainChain.push_back(first[i].first);
+        mainChain.push_back(first[i].second);
+        i++;
+    }
+    while (j < second.size())
+    {
+        mainChain.push_back(second[j].first);
+        mainChain.push_back(second[j].second);
+        j++;
+    }
+    if (lastNumber != -1)
+        pend_.push_back(lastNumber);
+}
 
 void PmergeMe::printNumbers()
 {

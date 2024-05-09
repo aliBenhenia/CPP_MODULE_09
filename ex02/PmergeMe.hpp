@@ -12,6 +12,9 @@ class PmergeMe
     private:
         std::vector<int> numbers;
         std::vector<std::pair<int, int> > PairNumbers;
+        std::vector<int> mainChain;
+        std::vector<int> pend_;
+
         std::vector<std::pair<int, int> > first;
         std::vector<std::pair<int, int> > second;
         std::vector<int> sorted;
@@ -28,6 +31,7 @@ class PmergeMe
         void splitPairs();
         void MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end);
         void Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end);
+        void fillMainChainAndPend();
         void printNumbers();
         ~PmergeMe();
 };
