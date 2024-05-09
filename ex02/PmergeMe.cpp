@@ -53,9 +53,13 @@ void PmergeMe::SortPairs()
         this->lastNumber = numbers.back();
         numbers.pop_back();
     }
-    while (i < numbers.size())
+    else
+        this->lastNumber = -1;
+    while (i < numbers.size() - 1)
     {
-        if (numbers[i] > numbers[i + 1])
+        // if (i % 2 == 0 && numbers[i] < numbers[i + 1])// for the first element of pair
+        //     std::swap(numbers[i], numbers[i + 1]);
+        if (numbers[i] < numbers[i + 1])
             std::swap(numbers[i], numbers[i + 1]);
         i += 2;
     }
@@ -65,10 +69,11 @@ void PmergeMe::splitPairs()
 {
     size_t i = 0;
 
-    while (i < numbers.size())
+    while (i < numbers.size() -1)// -1 for the last element of pair
     {
-        PairNumbers.push_back(std::make_pair(numbers[i], numbers[i + 1]));
-        i += 2;
+        if (i % 2 == 0)// for the first element of pair
+            PairNumbers.push_back(std::make_pair(numbers[i], numbers[i + 1]));
+        i++;
     }
 }
 
@@ -124,9 +129,9 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
 {
     int mid;
 
-    if (start >= end)// base case for recursion when the array is divided into single element
+    if (start < end)// base case for recursion when the array is divided into single element
         return;
-    mid = (start + end) / 2; // for divide the array into two parts
+    mid = start + (end  - start) / 2; // for divide the array into two parts
     MergeSortPair(PairNumbers, start, mid); // for left part of array .. recursive call .. divide and conquer
     MergeSortPair(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
     Merge(PairNumbers, start, mid, end); // merge the two parts of array .. conquer .. merge  the two parts of array 
@@ -134,15 +139,14 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
 
 void PmergeMe::printNumbers()
 {
-    size_t i = 0;
-
-    while (i < PairNumbers.size())
+    
+    std::cout << std::endl;
+    // print std::vector<std::pair<int, int> > PairNumbers pair
+    for (size_t i = 0; i < PairNumbers.size(); i++)
     {
-        std::cout << PairNumbers[i].first << " |" << std::endl;
-        i++;
+        std::cout << PairNumbers[i].first << " | " << PairNumbers[i].second << std::endl;
     }
-    if (lastNumber != 0)
-        std::cout << lastNumber << std::endl;
+    
 }
 
 void PmergeMe::start(std::string input)
