@@ -106,7 +106,7 @@ void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t star
             PairNumbers[start] = first[i]; // copy the first part of array into the main array
             i++;
         }
-        else if (first[i].first < second[j].first) // if the first element of first part of array is less than the first element of second part of array 
+        else if (first[i].first <= second[j].first) // if the first element of first part of array is less than the first element of second part of array 
         {
             PairNumbers[start] = first[i]; // copy the first element of first part of array into the main array
             i++; // increment the index of the first part of array
@@ -138,7 +138,7 @@ void PmergeMe::printNumbers()
 
     while (i < PairNumbers.size())
     {
-        std::cout << PairNumbers[i].first << " " << PairNumbers[i].second << std::endl;
+        std::cout << PairNumbers[i].first << " |" << std::endl;
         i++;
     }
     if (lastNumber != 0)
