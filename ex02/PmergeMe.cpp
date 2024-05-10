@@ -1,9 +1,7 @@
 #include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe()
-{
-
-}
+{}
 
 PmergeMe::PmergeMe(const PmergeMe &other)
 {
@@ -138,49 +136,44 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
 }
 void PmergeMe::fillMainChainAndPend()
 {
-    size_t i = 0;
-    size_t j = 0;
+   std::vector<std::pair<int, int> >:: iterator it;
 
-    while (i < first.size() && j < second.size())
+    for (it = PairNumbers.begin(); it != PairNumbers.end(); it++)
     {
-        if (first[i].second < second[j].second)
+        if (it == PairNumbers.begin())
         {
-            mainChain.push_back(first[i].first);
-            mainChain.push_back(first[i].second);
-            i++;
+            mainChain.push_back(it->first);
+            mainChain.push_back(it->second);
+            pendChain.push_back(it->second);
+            continue;
         }
-        else
-        {
-            mainChain.push_back(second[j].first);
-            mainChain.push_back(second[j].second);
-            j++;
-        }
+        mainChain.push_back(it->first);
+        pendChain.push_back(it->second);
     }
-    while (i < first.size())
-    {
-        mainChain.push_back(first[i].first);
-        mainChain.push_back(first[i].second);
-        i++;
-    }
-    while (j < second.size())
-    {
-        mainChain.push_back(second[j].first);
-        mainChain.push_back(second[j].second);
-        j++;
-    }
-    if (lastNumber != -1)
-        pend_.push_back(lastNumber);
+
+
+
 }
 
 void PmergeMe::printNumbers()
 {
     
-    std::cout << std::endl;
-    // print std::vector<std::pair<int, int> > PairNumbers pair
-    for (size_t i = 0; i < PairNumbers.size(); i++)
+    // print main chain
+    for (size_t i = 0; i < mainChain.size(); i++)
     {
-        std::cout << PairNumbers[i].first << " | " << PairNumbers[i].second << std::endl;
+        std::cout << mainChain[i];
+        std::cout << " ";
     }
+    std::cout << std::endl;
+    std::cout << "******************************************************" << std::endl;
+    // print pend chain
+    for (size_t i = 0; i < pendChain.size(); i++)
+    {
+        std::cout << pendChain[i];
+        std::cout << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "******************************************************" << std::endl;
     
 }
 
@@ -194,6 +187,7 @@ void PmergeMe::start(std::string input)
     SortPairs();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
+    fillMainChainAndPend();
 }
 
 

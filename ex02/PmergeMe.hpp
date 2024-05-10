@@ -13,7 +13,7 @@ class PmergeMe
         std::vector<int> numbers;
         std::vector<std::pair<int, int> > PairNumbers;
         std::vector<int> mainChain;
-        std::vector<int> pend_;
+        std::vector<int> pendChain;
 
         std::vector<std::pair<int, int> > first;
         std::vector<std::pair<int, int> > second;
