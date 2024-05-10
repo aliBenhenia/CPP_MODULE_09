@@ -157,32 +157,37 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
 }
 void PmergeMe::fillMainChainAndPend()
 {
+   bool isFirstIteration = true;
    std::vector<std::pair<int, int> >:: iterator it;
 
     for (it = PairNumbers.begin(); it != PairNumbers.end(); it++)
     {
-        if (it == PairNumbers.begin())
+        if (isFirstIteration)
         {
-            mainChain.push_back(it->first);
             mainChain.push_back(it->second);
+            mainChain.push_back(it->first);
             pendChain.push_back(it->second);
+            isFirstIteration = false;
             continue;
         }
         mainChain.push_back(it->first);
         pendChain.push_back(it->second);
     }
-
-
-
 }
 
 void PmergeMe::printNumbers()
 {
-    
-   std::vector<std::pair<int, int> >::iterator it;
+    // print main chain and pend chain
+    std::vector<int>::iterator it;
+    std::vector<int>::iterator it2;
 
-    for (it = PairNumbers.begin(); it != PairNumbers.end(); it++)
-        std::cout << "[" << it->first  << " " << it->second << "]" << std::endl;
+    for (it = mainChain.begin(); it != mainChain.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+    std::cout << "********************************" << std::endl;
+    for (it2 = pendChain.begin(); it2 != pendChain.end(); it2++)
+        std::cout << *it2 << " ";
+    std::cout << std::endl;
 }
 
 void PmergeMe::start(int ac, char *av[])
@@ -196,7 +201,7 @@ void PmergeMe::start(int ac, char *av[])
     SortPairs();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
-    // fillMainChainAndPend();
+    fillMainChainAndPend();
 }
 
 
