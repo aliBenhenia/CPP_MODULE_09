@@ -14,31 +14,41 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     return *this;
 }
 
-bool PmergeMe::parseNumbers(std::string input)
+bool PmergeMe::processNumber(std::string input)
 {
     std::string number;
     size_t i = 0;
 
+    if (input.size() == 0)
+        return (false);
+    if (input[0] == '-')
+        return (false);
+    if (input[0] == '+')
+        i++;
     while (i < input.size())
     {
-        if (input[i] == ' ')
-        {
-            if (number.size() > 0)
-            {
-                numbers.push_back(std::stoi(number));
-                number.clear();
-            }
-        }
-        else if (std::isdigit(input[i]) || input[i] == '-')
+        if (std::isdigit(input[i]))
             number += input[i];
         else
             return (false);
         i++;
     }
     if (number.size() > 0)
-        numbers.push_back(std::stoi(number));
+        numbers.push_back(std::atoi(number.c_str()));
     if (numbers.size() == 0)
         return (false);
+    return (true);
+}
+
+bool PmergeMe::parseNumbers(int ac , char *av[])
+{
+    int i = 1;
+    while (i < ac)
+    {
+        if (processNumber(av[i]) == false)
+            return (false);
+        i++;
+    }
     return (true);
 }
 
@@ -77,57 +87,70 @@ void PmergeMe::splitPairs()
 
 void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
 {
+    (void)PairNumbers;
+    (void)start;
+    (void)mid;
+    (void)end;
 
-// for the first part of array and second part of array..so objectif is to merge the two parts of array
+    if (start == end && mid == end) // if the array has only one element
+        return;
+    size_t lenArr1 = mid - start + 1;
+    size_t lenArr2 = end - mid;
     size_t i = 0;
-    size_t j = 0;
+    std::vector<std::pair<int, int> > leftArr(lenArr1);
+    std::vector<std::pair<int, int> > rightArr(lenArr2);
 
-   // copy the first part of array into first vector
-    while (start + i <= mid)
+    // copy the left part of array
+    while (i < lenArr1)
     {
-        first.push_back(PairNumbers[start + i]);
+        leftArr[i] = PairNumbers[start + i];
         i++;
     }
-    // copy the second part of array into second vector
-    while (mid + 1 + j <= end)
+    i = 0;
+    while (i < lenArr2)
     {
-        second.push_back(PairNumbers[mid + 1 + j]);
-        j++;
+        rightArr[i] = PairNumbers[mid + 1 + i];
+        i++;
     }
-    // merge the two parts of array
-    i = 0; // for the first part of array
-    j = 0; // for the second part of array
-    while (start <= end) // for the two parts of array
+    size_t idxArr1 = 0;
+    size_t idxArr2 = 0;
+
+    size_t idxMerged = start;
+    while (idxArr1 < lenArr1 && idxArr2 < lenArr2)
     {
-        if (i == first.size()) // if the first part of array is empty
+        if (leftArr[idxArr1].first <= rightArr[idxArr2].first)
         {
-            PairNumbers[start] = second[j]; // copy the second part of array into the main array
-            j++; // increment the index of the second part of array
-        }
-        else if (j == second.size()) // if the second part of array is empty
-        {
-            PairNumbers[start] = first[i]; // copy the first part of array into the main array
-            i++;
-        }
-        else if (first[i].first <= second[j].first) // if the first element of first part of array is less than the first element of second part of array 
-        {
-            PairNumbers[start] = first[i]; // copy the first element of first part of array into the main array
-            i++; // increment the index of the first part of array
+            PairNumbers[idxMerged] = leftArr[idxArr1];
+            idxArr1++;
         }
         else
         {
-            PairNumbers[start] = second[j]; // copy the first element of second part of array into the main array
-            j++; // increment the index of the second part of array
+            PairNumbers[idxMerged] = rightArr[idxArr2];
+            idxArr2++;
         }
-        start++; // increment the index of the main array
+        idxMerged++;
     }
+    while (idxArr1 < lenArr1)
+    {
+        PairNumbers[idxMerged] = leftArr[idxArr1];
+        idxArr1++;
+        idxMerged++;
+    }
+    while (idxArr2 < lenArr2)
+    {
+        PairNumbers[idxMerged] = rightArr[idxArr2];
+        idxArr2++;
+        idxMerged++;
+    }
+
+
 }
 
 void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
 {
     int mid;
 
-    if (start < end)// base case for recursion when the array is divided into single element
+    if (start >= end) // if the array has only one element
         return;
     mid = start + (end  - start) / 2; // for divide the array into two parts
     MergeSortPair(PairNumbers, start, mid); // for left part of array .. recursive call .. divide and conquer
@@ -158,36 +181,24 @@ void PmergeMe::fillMainChainAndPend()
 void PmergeMe::printNumbers()
 {
     
-    // print main chain
-    for (size_t i = 0; i < mainChain.size(); i++)
-    {
-        std::cout << mainChain[i];
-        std::cout << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "******************************************************" << std::endl;
-    // print pend chain
-    for (size_t i = 0; i < pendChain.size(); i++)
-    {
-        std::cout << pendChain[i];
-        std::cout << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "******************************************************" << std::endl;
-    
+   std::vector<std::pair<int, int> >::iterator it;
+
+    for (it = PairNumbers.begin(); it != PairNumbers.end(); it++)
+        std::cout << "[" << it->first  << " " << it->second << "]" << std::endl;
 }
 
-void PmergeMe::start(std::string input)
+void PmergeMe::start(int ac, char *av[])
 {
-    if (parseNumbers(input) == false)
+    if (parseNumbers(ac, av) == false)
     {
         std::cout << "invalid input ...plz enter correct input" << std::endl;
+        numbers.clear();
         return;
     }
     SortPairs();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
-    fillMainChainAndPend();
+    // fillMainChainAndPend();
 }
 
 

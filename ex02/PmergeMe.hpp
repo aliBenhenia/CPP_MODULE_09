@@ -25,8 +25,9 @@ class PmergeMe
         PmergeMe();
         PmergeMe(const PmergeMe &other);
         PmergeMe &operator=(const PmergeMe &other);
-        void start(std::string input);
-        bool parseNumbers(std::string input);
+        void start(int ac, char *av[]);
+        bool parseNumbers(int ac, char *av[]);
+        bool processNumber(std::string input);
         void SortPairs();
         void splitPairs();
         void MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end);

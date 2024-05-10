@@ -5,12 +5,12 @@ int main(int ac, char *av[])
 {
     PmergeMe    p;
 
-    if (ac != 2)
+    if (ac < 2)
     {
-        std::cout << "usage: ./PmergeMe [input]" << std::endl;
+        std::cout << "enter args..." << std::endl;
         return (1);
     }
-    p.start(av[1]);
+    p.start(ac, av);
     p.printNumbers();
     return (0);
 }
