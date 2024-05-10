@@ -101,13 +101,13 @@ void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t star
     std::vector<std::pair<int, int> > rightArr(lenArr2);
 
     // copy the left part of array
-    while (i < lenArr1)
+    while (i < lenArr1) // copy the left part of array
     {
         leftArr[i] = PairNumbers[start + i];
         i++;
     }
     i = 0;
-    while (i < lenArr2)
+    while (i < lenArr2) // copy the right part of array
     {
         rightArr[i] = PairNumbers[mid + 1 + i];
         i++;
@@ -115,35 +115,33 @@ void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t star
     size_t idxArr1 = 0;
     size_t idxArr2 = 0;
 
-    size_t idxMerged = start;
-    while (idxArr1 < lenArr1 && idxArr2 < lenArr2)
+    size_t idxMerged = start; // for the merged array strating from the start index
+    while (idxArr1 < lenArr1 && idxArr2 < lenArr2)  // merge the two parts of array
     {
-        if (leftArr[idxArr1].first <= rightArr[idxArr2].first)
+        if (leftArr[idxArr1].first <= rightArr[idxArr2].first) // compare the first element of pair
         {
-            PairNumbers[idxMerged] = leftArr[idxArr1];
-            idxArr1++;
+            PairNumbers[idxMerged] = leftArr[idxArr1];// copy the left part of array
+            idxArr1++; // increment the index of left part of array
         }
         else
         {
-            PairNumbers[idxMerged] = rightArr[idxArr2];
-            idxArr2++;
+            PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the right part of array
+            idxArr2++;// increment the index of right part of array
         }
-        idxMerged++;
+        idxMerged++; // increment the index of merged array
     }
-    while (idxArr1 < lenArr1)
+    while (idxArr1 < lenArr1) // if there are remaining elements in the left part of array
     {
-        PairNumbers[idxMerged] = leftArr[idxArr1];
-        idxArr1++;
-        idxMerged++;
+        PairNumbers[idxMerged] = leftArr[idxArr1]; // copy the remaining elements of left part of array
+        idxArr1++; // increment the index of left part of array
+        idxMerged++; // increment the index of merged array
     }
-    while (idxArr2 < lenArr2)
+    while (idxArr2 < lenArr2) // if there are remaining elements in the right part of array
     {
-        PairNumbers[idxMerged] = rightArr[idxArr2];
-        idxArr2++;
-        idxMerged++;
+        PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the remaining elements of right part of array
+        idxArr2++; // increment the index of right part of array
+        idxMerged++; // increment the index of merged array
     }
-
-
 }
 
 void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
