@@ -17,6 +17,6 @@ numbers.sort((a, b) => a - b);
 // Print the sorted array
 let data = ''; 
 numbers.map(number =>{
-    data += number + ' ';
+    data += number + ' ';   
 })
-console.log(data);
+console.log(data); 
