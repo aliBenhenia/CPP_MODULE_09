@@ -11,6 +11,6 @@ int main(int ac, char *av[])
         return (1);
     }
     p.start(ac, av);
-    p.printNumbers();
+    // p.printNumbers();
     return (0);
 }

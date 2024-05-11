@@ -189,14 +189,43 @@ void PmergeMe::printNumbers()
         std::cout << *it2 << " ";
     std::cout << std::endl;
 }
-void PmergeMe::createSequence()
+
+
+std::vector<int> PmergeMe::genertaingJacobSequence()
 {
+    size_t i = 2;
+
+    std::vector<int> jacobNumbers;
+    jacobNumbers.push_back(0);
+    jacobNumbers.push_back(1);
+
+    while (i < 20)
+    {
+        jacobNumbers.push_back(jacobNumbers[i - 1] + (2 * jacobNumbers[i - 2]));
+        i++;
+    }
+    jacobNumbers.erase(jacobNumbers.begin() + 1);
+    return (jacobNumbers);
+}
+
+void PmergeMe::createComb()
+{
+    std::vector<int>jacobNumbers = genertaingJacobSequence();
+
+    combination.push_back(0);
+
+    int i = 0;
+    while (i < 20)
+    {
+       
+        i++;
+    }
     
 }
 
 void PmergeMe::sortingResult()
 {
-   createSequence();
+   createComb();
 }
 
 void PmergeMe::start(int ac, char *av[])
