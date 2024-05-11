@@ -14,6 +14,7 @@ class PmergeMe
         std::vector<std::pair<int, int> > PairNumbers;
         std::vector<int> mainChain;
         std::vector<int> pendChain;
+        std::vector<int> JacobSequence;
 
         std::vector<std::pair<int, int> > first;
         std::vector<std::pair<int, int> > second;
@@ -33,6 +34,8 @@ class PmergeMe
         void MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end);
         void Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end);
         void fillMainChainAndPend();
+        void sortingResult();
+        void createSequence();
         void printNumbers();
         ~PmergeMe();
 };

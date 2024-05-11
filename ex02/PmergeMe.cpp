@@ -189,6 +189,15 @@ void PmergeMe::printNumbers()
         std::cout << *it2 << " ";
     std::cout << std::endl;
 }
+void PmergeMe::createSequence()
+{
+    
+}
+
+void PmergeMe::sortingResult()
+{
+   createSequence();
+}
 
 void PmergeMe::start(int ac, char *av[])
 {
@@ -202,6 +211,7 @@ void PmergeMe::start(int ac, char *av[])
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
     fillMainChainAndPend();
+    sortingResult();
 }
 
 
