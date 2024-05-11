@@ -180,13 +180,9 @@ void PmergeMe::printNumbers()
     // print main chain and pend chain
     std::vector<int>::iterator it;
     std::vector<int>::iterator it2;
-
+    std::cout << "\n main chain: ";
     for (it = mainChain.begin(); it != mainChain.end(); it++)
         std::cout << *it << " ";
-    std::cout << std::endl;
-    std::cout << "********************************" << std::endl;
-    for (it2 = pendChain.begin(); it2 != pendChain.end(); it2++)
-        std::cout << *it2 << " ";
     std::cout << std::endl;
 }
 
@@ -233,6 +229,22 @@ void PmergeMe::createComb()
 void PmergeMe::sortingResult()
 {
    createComb();
+   size_t i = 1;
+
+   std::vector<int>::iterator it;
+   int combIndex;
+   while (i < combination.size())
+   {
+        combIndex = combination.at(i);
+        if (combIndex >= (int)pendChain.size())
+        {
+            i++;
+            continue;
+        }
+        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex));
+        mainChain.insert(it, pendChain.at(combIndex));
+        i++;
+   }
 }
 
 void PmergeMe::start(int ac, char *av[])
@@ -248,6 +260,12 @@ void PmergeMe::start(int ac, char *av[])
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
     fillMainChainAndPend();
     sortingResult();
+    if (lastNumber != -1)
+    {
+        std::vector<int>::iterator it;
+        it = std::lower_bound(mainChain.begin(), mainChain.end(), lastNumber);
+        mainChain.insert(it, lastNumber);
+    }
 }
 
 
