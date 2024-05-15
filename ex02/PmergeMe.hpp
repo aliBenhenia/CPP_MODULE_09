@@ -38,8 +38,10 @@ class PmergeMe
         void createComb();
         std::vector<int> genertaingJacobSequence();
         void printNumbers();
+        size_t getMiddle(size_t start, size_t end);
         ~PmergeMe();
 };
+
 
 
 #endif
