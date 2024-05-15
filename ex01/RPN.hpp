@@ -17,5 +17,5 @@ class RBN
         // bool checkIsValid(std::string expression);
         ~RBN();
 };
-
+bool isOpertor(char c);
 #endif
