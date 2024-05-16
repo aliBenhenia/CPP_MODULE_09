@@ -39,6 +39,7 @@ class PmergeMe
         std::vector<int> genertaingJacobSequence();
         void printNumbers();
         size_t getMiddle(size_t start, size_t end);
+        bool    isOdd(size_t numberSize);
         ~PmergeMe();
 };
 

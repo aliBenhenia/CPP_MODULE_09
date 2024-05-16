@@ -60,11 +60,18 @@ bool PmergeMe::parseNumbers(int ac, char *av[])
     return (true);
 }
 
+bool PmergeMe::isOdd(size_t numberSize)
+{
+    if (numberSize % 2 != 0)
+        return (true);
+    return (false);
+}
+
 // alg Ford-Johnson algorithm merge-insert sort algorithm
 void PmergeMe::SortPairs()
 {
     size_t i = 0;
-    if (numbers.size() % 2 != 0)// if the number of elements is odd mean the last element is not in pair
+    if (isOdd(numbers.size()))// if the number of elements is odd mean the last element is not in pair
     {
         this->lastNumber = numbers.back();
         numbers.pop_back();
