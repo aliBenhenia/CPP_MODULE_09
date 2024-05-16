@@ -91,7 +91,7 @@ void PmergeMe::SortPairs()
 void PmergeMe::splitPairs()
 {
     size_t i = 0;
-    if (numbers.size() % 2 != 0)// if the number of elements is odd mean the last element is not in pair
+    if (isOdd(numbers.size()))// if the number of elements is odd mean the last element is not in pair
     {
         this->lastNumber = numbers.back();
         numbers.pop_back();
