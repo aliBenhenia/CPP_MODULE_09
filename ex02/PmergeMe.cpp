@@ -66,6 +66,12 @@ bool PmergeMe::isOdd(size_t numberSize)
         return (true);
     return (false);
 }
+bool PmergeMe::isEven(size_t index)
+{
+    if (index % 2 == 0)
+        return (true);
+    return (false);
+}
 
 // alg Ford-Johnson algorithm merge-insert sort algorithm
 void PmergeMe::SortPairs()
@@ -100,7 +106,7 @@ void PmergeMe::splitPairs()
         this->lastNumber = -1;
     while (i < numbers.size() - 1) // -1 for the last element of pair
     {
-        if (i % 2 == 0) // for the first element of pair
+        if (isEven(i)) // for the first element of pair
             PairNumbers.push_back(std::make_pair(numbers[i], numbers[i + 1]));
         i++;
     }

@@ -40,6 +40,7 @@ class PmergeMe
         void printNumbers();
         size_t getMiddle(size_t start, size_t end);
         bool    isOdd(size_t numberSize);
+        bool    isEven(size_t index);
         ~PmergeMe();
 };
 
