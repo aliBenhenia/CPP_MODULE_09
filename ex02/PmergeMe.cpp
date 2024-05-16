@@ -44,6 +44,8 @@ bool PmergeMe::processNumber(std::string input)
 bool PmergeMe::parseNumbers(int ac, char *av[])
 {
     int i = 1;
+    if (ac == 2)
+        return(false);
     while (i < ac)
     {
         if (processNumber(av[i]) == false)
@@ -264,7 +266,7 @@ void PmergeMe::start(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
     {
-        std::cout << "invalid input ...plz enter correct input" << std::endl;
+        std::cerr << "invalid input ...plz enter correct input" << std::endl;
         numbers.clear();
         return;
     }
@@ -279,6 +281,7 @@ void PmergeMe::start(int ac, char *av[])
         it = std::lower_bound(mainChain.begin(), mainChain.end(), lastNumber);
         mainChain.insert(it, lastNumber);
     }
+    printNumbers();
 }
 
 PmergeMe::~PmergeMe()
