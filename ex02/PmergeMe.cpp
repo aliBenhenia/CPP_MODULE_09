@@ -35,7 +35,12 @@ bool PmergeMe::processNumber(std::string input)
         i++;
     }
     if (number.size() > 0)
-        numbers.push_back(std::atoi(number.c_str()));
+    {
+        int num = std::atoi(number.c_str());
+        if (num < 0)
+            return (false);
+        numbers.push_back(num);
+    }
     if (numbers.size() == 0)
         return (false);
     return (true);
