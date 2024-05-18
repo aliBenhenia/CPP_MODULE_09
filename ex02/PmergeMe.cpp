@@ -239,43 +239,43 @@ std::vector<int> PmergeMe::genertaingJacobSequence()
 
 void PmergeMe::createComb()
 {
-    std::vector<int> jacobNumbers = genertaingJacobSequence();
+    std::vector<int> jacobNumbers = genertaingJacobSequence(); // generate the jacob sequence
 
-    combination.push_back(0);
+    combination.push_back(0); // add the first element of jacob sequence
 
-    int i = 1;
-    while (i < 20)
+    int i = 1; // for the index of jacob sequence starting from the second element
+    while (i < 20) // for the jacob sequence until the 20th element beacuse the jacob sequence has 20 elements
     {
-        combination.push_back(jacobNumbers[i]);
-        int j = jacobNumbers[i - 1] + 1;
-        while (j < jacobNumbers[i])
+        combination.push_back(jacobNumbers[i]); // add the element of jacob sequence
+        int j = jacobNumbers[i - 1] + 1; // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence 
+        while (j < jacobNumbers[i]) // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence
         {
-            combination.push_back(j);
-            j++;
+            combination.push_back(j); // add the elements between the first element of jacob sequence and the next element of jacob sequence
+            j++; 
         }
-        if (combination.size() >= pendChain.size())
+        if (combination.size() >= pendChain.size()) // if the combination size is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size
             break;
-        i++;
+        i++; // increment the index of jacob sequence
     }
 }
 
 void PmergeMe::sortingResult()
 {
-    createComb();
-    size_t i = 1;
+    createComb(); // create the combination based on the jacob sequence
+    size_t i = 1; // for the index of combination starting from the second element because the first element of combination is already added in the main chain
 
-    std::vector<int>::iterator it;
-    int combIndex;
-    while (i < combination.size())
+    std::vector<int>::iterator it; // for the iterator of main chain
+    int combIndex; // for the index of combination
+    while (i < combination.size()) // for the combination until the last element of combination
     {
-        combIndex = combination.at(i);
-        if (combIndex >= (int)pendChain.size())
+        combIndex = combination.at(i); // get the index of combination
+        if (combIndex >= (int)pendChain.size()) // if the index of combination is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size and we skip the element of pend chain
         {
-            i++;
-            continue;
+            i++; // increment the index of combination because we skip the element of pend chain
+            continue; // skip the element of pend chain
         }
-        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex));
-        mainChain.insert(it, pendChain.at(combIndex));
+        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); // find the position of the element of pend chain in the main chain
+        mainChain.insert(it, pendChain.at(combIndex)); // insert the element of pend chain in the main chain
         i++;
     }
 }
