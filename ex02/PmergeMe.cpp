@@ -228,7 +228,7 @@ std::vector<int> PmergeMe::genertaingJacobSequence()
     jacobNumbers.push_back(0);
     jacobNumbers.push_back(1);
 
-    while (i < 50)
+    while (i < 20)
     {
         jacobNumbers.push_back(jacobNumbers[i - 1] + (2 * jacobNumbers[i - 2]));
         i++;
