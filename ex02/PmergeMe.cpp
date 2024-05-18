@@ -287,7 +287,10 @@ void PmergeMe::printBeforeSort()
         std::cout << *it << " ";
     std::cout << std::endl;
 }
-
+void PmergeMe::printTimeComplexity()
+{
+    std::cout << "Time complexity: O(n log n)" << std::endl;
+}
 void PmergeMe::start_vector(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
@@ -297,6 +300,7 @@ void PmergeMe::start_vector(int ac, char *av[])
         return;
     }
     printBeforeSort();
+    std::clock_t start = std::clock();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
     fillMainChainAndPend();
@@ -307,7 +311,11 @@ void PmergeMe::start_vector(int ac, char *av[])
         it = std::lower_bound(mainChain.begin(), mainChain.end(), lastNumber);
         mainChain.insert(it, lastNumber);
     }
+    std::clock_t end = std::clock();
     printNumbers();
+    // print the time complexity
+    double time = (double)(end - start) / CLOCKS_PER_SEC;
+    std::cout << "Time complexity: " << time << " seconds" << std::endl;
 }
 
 void PmergeMe::splitPairsDeque()
@@ -528,6 +536,11 @@ void PmergeMe::printBeforeSortDeque()
     std::cout << std::endl;
 }
 
+void PmergeMe::printTimeComplexityDeque()
+{
+    std::cout << "Time complexity: O(n log n)" << std::endl;
+}
+
 void PmergeMe::start_deque(int ac, char *av[])
 {
     if (parseNumbersDeque(ac, av) == false)
@@ -537,6 +550,7 @@ void PmergeMe::start_deque(int ac, char *av[])
         return;
     }
     printBeforeSortDeque();
+    std::clock_t start = std::clock();
     splitPairsDeque();
     MergeSortPairDeque(this->PairNumbersDeque, 0, this->PairNumbersDeque.size() - 1);
     fillMainChainAndPendDeque();
@@ -547,8 +561,11 @@ void PmergeMe::start_deque(int ac, char *av[])
         it = std::lower_bound(mainChainDeque.begin(), mainChainDeque.end(), lastNumberDeque);
         mainChainDeque.insert(it, lastNumberDeque);
     }
+    std::clock_t end = std::clock();
     printNumbersDeque();
-    printTimeComplexityDeque();
+    // print the time complexity
+    double time = (double)(end - start) / CLOCKS_PER_SEC;
+    std::cout << "Time complexity: " << time << " seconds" << std::endl;
 }
 
 PmergeMe::~PmergeMe()
