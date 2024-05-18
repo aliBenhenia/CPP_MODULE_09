@@ -9,7 +9,7 @@
 
 class PmergeMe
 {
-    private:
+    private: // for vector
         std::vector<int> numbers;
         std::vector<std::pair<int, int> > PairNumbers;
         std::vector<int> mainChain;
@@ -21,12 +21,23 @@ class PmergeMe
         std::vector<int> sorted;
         int lastNumber;
 
+    private: // for deque
+        std::deque<int> numbersDeque;
+        std::deque<std::pair<int, int> > PairNumbersDeque;
+        std::deque<int> mainChainDeque;
+        std::deque<int> pendChainDeque;
+        std::deque<int> combinationDeque;
+
+        std::deque<std::pair<int, int> > firstDeque;
+        std::deque<std::pair<int, int> > secondDeque;
+        std::deque<int> sortedDeque;
+        int lastNumberDeque;
 
     public:
         PmergeMe();
         PmergeMe(const PmergeMe &other);
         PmergeMe &operator=(const PmergeMe &other);
-        void start(int ac, char *av[]);
+        void start_vector(int ac, char *av[]);
         bool parseNumbers(int ac, char *av[]);
         bool processNumber(std::string input);
         void SortPairs();
@@ -41,6 +52,26 @@ class PmergeMe
         size_t getMiddle(size_t start, size_t end);
         bool    isOdd(size_t numberSize);
         bool    isEven(size_t index);
+        void printBeforeSort();
+        void printTimeComplexity();
+        // for deque
+        void start_deque(int ac, char *av[]);
+        bool parseNumbersDeque(int ac, char *av[]);
+        bool processNumberDeque(std::string input);
+        void SortPairsDeque();
+        void splitPairsDeque();
+        void MergeSortPairDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t start, size_t end);
+        void MergeDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end);
+        void fillMainChainAndPendDeque();
+        void sortingResultDeque();
+        void createCombDeque();
+        std::deque<int> genertaingJacobSequenceDeque();
+        void printNumbersDeque();
+        size_t getMiddleDeque(size_t start, size_t end);
+        bool    isOddDeque(size_t numberSize);
+        bool    isEvenDeque(size_t index);
+        void printBeforeSortDeque();
+        void printTimeComplexityDeque();
         ~PmergeMe();
 };
 

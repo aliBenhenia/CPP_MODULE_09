@@ -9,6 +9,7 @@ int main(int ac, char *av[])
         std::cout << "enter args..." << std::endl;
         return (1);
     }
-    p.start(ac, av);
+    p.start_vector(ac, av);
+    p.start_deque(ac, av);
     return (0);
 }
