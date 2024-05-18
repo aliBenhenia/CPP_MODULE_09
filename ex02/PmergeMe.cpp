@@ -276,7 +276,7 @@ void PmergeMe::sortingResult()
         }
         it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); // find the position of the element of pend chain in the main chain
         mainChain.insert(it, pendChain.at(combIndex)); // insert the element of pend chain in the main chain
-        i++;
+        i++; // increment the index of combination
     }
 }
 
