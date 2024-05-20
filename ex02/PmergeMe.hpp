@@ -21,6 +21,8 @@ class PmergeMe
         std::vector<std::pair<int, int> > second;
         std::vector<int> sorted;
         int lastNumber;
+        std::clock_t start1;
+        std::clock_t end1;
 
     private: // for deque
         std::deque<int> numbersDeque;
@@ -33,6 +35,8 @@ class PmergeMe
         std::deque<std::pair<int, int> > secondDeque;
         std::deque<int> sortedDeque;
         int lastNumberDeque;
+        std::clock_t start2;
+        std::clock_t end2;
 
     public:
         PmergeMe();
@@ -54,7 +58,6 @@ class PmergeMe
         bool    isOdd(size_t numberSize);
         bool    isEven(size_t index);
         void printBeforeSort();
-        void printTimeComplexity();
         // for deque
         void start_deque(int ac, char *av[]);
         bool parseNumbersDeque(int ac, char *av[]);
@@ -72,7 +75,7 @@ class PmergeMe
         bool    isOddDeque(size_t numberSize);
         bool    isEvenDeque(size_t index);
         void printBeforeSortDeque();
-        void printTimeComplexityDeque();
+        void printTimeComplexity();
         ~PmergeMe();
 };
 

@@ -214,7 +214,7 @@ void PmergeMe::printNumbers()
     // print main chain and pend chain
     std::vector<int>::iterator it;
     std::vector<int>::iterator it2;
-    std::cout << "\n main chain: ";
+    std::cout << "after : ";
     for (it = mainChain.begin(); it != mainChain.end(); it++)
         std::cout << *it << " ";
     std::cout << std::endl;
@@ -282,15 +282,12 @@ void PmergeMe::sortingResult()
 void PmergeMe::printBeforeSort()
 {
     std::vector<int>::iterator it;
-    std::cout << "Before sort: ";
+    std::cout << "Before : ";
     for (it = numbers.begin(); it != numbers.end(); it++)
         std::cout << *it << " ";
     std::cout << std::endl;
 }
-void PmergeMe::printTimeComplexity()
-{
-    std::cout << "Time complexity: O(n log n)" << std::endl;
-}
+
 void PmergeMe::start_vector(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
@@ -300,7 +297,7 @@ void PmergeMe::start_vector(int ac, char *av[])
         return;
     }
     printBeforeSort();
-    std::clock_t start = std::clock();
+    start1 = std::clock();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
     fillMainChainAndPend();
@@ -311,11 +308,11 @@ void PmergeMe::start_vector(int ac, char *av[])
         it = std::lower_bound(mainChain.begin(), mainChain.end(), lastNumber);
         mainChain.insert(it, lastNumber);
     }
-    std::clock_t end = std::clock();
+    end1 = std::clock();
     printNumbers();
     // print the time complexity
-    double time = (double)(end - start) / CLOCKS_PER_SEC;
-    std::cout << "Time complexity: " << time << " seconds" << std::endl;
+    // double time = (double)(end - start) / CLOCKS_PER_SEC;
+    // std::cout << "Time complexity: " << time << " seconds" << std::endl;
 }
 
 void PmergeMe::splitPairsDeque()
@@ -536,10 +533,6 @@ void PmergeMe::printBeforeSortDeque()
     std::cout << std::endl;
 }
 
-void PmergeMe::printTimeComplexityDeque()
-{
-    std::cout << "Time complexity: O(n log n)" << std::endl;
-}
 
 void PmergeMe::start_deque(int ac, char *av[])
 {
@@ -549,8 +542,7 @@ void PmergeMe::start_deque(int ac, char *av[])
         numbersDeque.clear();
         return;
     }
-    printBeforeSortDeque();
-    std::clock_t start = std::clock();
+    start2 = std::clock();
     splitPairsDeque();
     MergeSortPairDeque(this->PairNumbersDeque, 0, this->PairNumbersDeque.size() - 1);
     fillMainChainAndPendDeque();
@@ -561,11 +553,18 @@ void PmergeMe::start_deque(int ac, char *av[])
         it = std::lower_bound(mainChainDeque.begin(), mainChainDeque.end(), lastNumberDeque);
         mainChainDeque.insert(it, lastNumberDeque);
     }
-    std::clock_t end = std::clock();
-    printNumbersDeque();
+    end2 = std::clock();
     // print the time complexity
-    double time = (double)(end - start) / CLOCKS_PER_SEC;
-    std::cout << "Time complexity: " << time << " seconds" << std::endl;
+    // double time = (double)(end - start) / CLOCKS_PER_SEC;
+    // std::cout << "Time complexity: " << time << " seconds" << std::endl;
+}
+
+void PmergeMe::printTimeComplexity()
+{
+    double time1 = (static_cast<double>(end1 - start1)) / CLOCKS_PER_SEC;
+    double time2 = (static_cast<double>(end2 - start2)) / CLOCKS_PER_SEC;
+    std::cout << "Time to process a range of " << mainChain.size() << " elements with std::vector : " <<  time1 << " seconds" << std::endl;
+    std::cout << "Time to process a range of " << mainChainDeque.size() << " elements with std::deque : " << time2 << " seconds" << std::endl;
 }
 
 PmergeMe::~PmergeMe()
