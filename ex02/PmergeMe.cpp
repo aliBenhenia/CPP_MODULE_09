@@ -292,9 +292,10 @@ void PmergeMe::start_vector(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
     {
-        std::cerr << "invalid input ...plz enter correct input" << std::endl;
+        // std::cerr << "invalid input ...plz enter correct input" << std::endl;
         numbers.clear();
-        return;
+        // return;
+        throw "invalid input ...plz enter correct input";
     }
     printBeforeSort();
     start1 = std::clock();

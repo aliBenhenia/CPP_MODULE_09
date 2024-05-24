@@ -9,8 +9,16 @@ int main(int ac, char *av[])
         std::cout << "enter args..." << std::endl;
         return (1);
     }
-    p.start_vector(ac, av);
-    p.start_deque(ac, av);
-    p.printTimeComplexity();
+    try
+    {
+        p.start_vector(ac, av);
+        p.start_deque(ac, av);
+        p.printTimeComplexity();
+    }
+    catch(const char *e)
+    {
+        std::cerr << e << '\n';
+        return (1);
+    }
     return (0);
 }
