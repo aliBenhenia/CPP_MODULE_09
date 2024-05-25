@@ -291,7 +291,12 @@ void PmergeMe::printBeforeSort()
 void PmergeMe::start_vector(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
+    {
+        // std::cerr << "invalid input ...plz enter correct input" << std::endl;
+        numbers.clear();
+        // return;
         throw "invalid input ...plz enter correct input";
+    }
     printBeforeSort();
     start1 = std::clock();
     splitPairs();
@@ -533,7 +538,11 @@ void PmergeMe::printBeforeSortDeque()
 void PmergeMe::start_deque(int ac, char *av[])
 {
     if (parseNumbersDeque(ac, av) == false)
-        throw "invalid input ...plz enter correct input";
+    {
+        std::cerr << "invalid input ...plz enter correct input" << std::endl;
+        numbersDeque.clear();
+        return;
+    }
     start2 = std::clock();
     splitPairsDeque();
     MergeSortPairDeque(this->PairNumbersDeque, 0, this->PairNumbersDeque.size() - 1);
