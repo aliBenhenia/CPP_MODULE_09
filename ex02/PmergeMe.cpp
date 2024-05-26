@@ -235,7 +235,7 @@ std::vector<int> PmergeMe::genertaingJacobSequence()
         jacobNumbers.push_back(jacobNumbers[i - 1] + (2 * jacobNumbers[i - 2]));
         i++;
     }
-    jacobNumbers.erase(jacobNumbers.begin() + 1);
+    jacobNumbers.erase(jacobNumbers.begin() + 1); // remove the first element of jacob sequence because the first element of jacob sequence is already added in the main chain
     return (jacobNumbers);
 }
 
@@ -282,6 +282,7 @@ void PmergeMe::sortingResult()
         i++; // increment the index of combination
     }
 }
+
 void PmergeMe::printBeforeSort()
 {
     std::vector<int>::iterator it;
