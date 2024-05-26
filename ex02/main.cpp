@@ -13,7 +13,7 @@ int main(int ac, char *av[])
     {
         p.start_vector(ac, av);
         p.start_deque(ac, av);
-        p.printTimeComplexity();
+        // p.printTimeComplexity();
     }
     catch(const char *e)
     {

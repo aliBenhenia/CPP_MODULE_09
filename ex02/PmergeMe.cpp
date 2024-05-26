@@ -178,6 +178,7 @@ size_t PmergeMe::getMiddle(size_t start, size_t end)
 {
     return (start + (end - start) / 2);
 }
+
 void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
 {
     size_t mid;
@@ -189,6 +190,7 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
     MergeSortPair(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
     Merge(PairNumbers, start, mid, end);      // merge the two parts of array .. conquer .. merge  the two parts of array
 }
+
 void PmergeMe::fillMainChainAndPend()
 {
     bool isFirstIteration = true;
@@ -256,7 +258,8 @@ void PmergeMe::createComb()
         if (combination.size() >= pendChain.size()) // if the combination size is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size
             break;
         i++; // increment the index of jacob sequence
-    }
+    } 
+
 }
 
 void PmergeMe::sortingResult()
@@ -274,7 +277,7 @@ void PmergeMe::sortingResult()
             i++; // increment the index of combination because we skip the element of pend chain
             continue; // skip the element of pend chain
         }
-        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); // find the position of the element of pend chain in the main chain
+        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); // find the position of the element of pend chain in the main chain the lower_bound return the iterator of the first element that is not less than the element of pend chain
         mainChain.insert(it, pendChain.at(combIndex)); // insert the element of pend chain in the main chain
         i++; // increment the index of combination
     }
@@ -297,7 +300,7 @@ void PmergeMe::start_vector(int ac, char *av[])
         // return;
         throw "invalid input ...plz enter correct input";
     }
-    printBeforeSort();
+    // printBeforeSort();
     start1 = std::clock();
     splitPairs();
     MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
