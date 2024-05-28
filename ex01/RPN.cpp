@@ -93,11 +93,11 @@ void RBN::calculeNumbers(char c)
     y = this->numbers.top();
     this->numbers.pop();
     if (c == '+')
-        this->numbers.push(x + y);
+        this->numbers.push(y + x);
     else if (c == '-')
         this->numbers.push(y - x);
     else if (c == '*')
-        this->numbers.push(x * y);
+        this->numbers.push(y * x);
     else if (c == '/')
     {
         if (x == 0)
