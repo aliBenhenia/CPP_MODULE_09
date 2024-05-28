@@ -18,4 +18,6 @@ class RBN
         ~RBN();
 };
 bool isOpertor(char c);
+bool containOnlySpaces(std::string expression);
+bool checkIsValid(std::string expression);
 #endif

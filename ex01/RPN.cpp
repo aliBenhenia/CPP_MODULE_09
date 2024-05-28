@@ -15,14 +15,30 @@ RBN &RBN::operator=(const RBN &other)
     this->numbers = other.numbers;
     return (*this);
 }
+
+bool containOnlySpaces(std::string expression)
+{
+    int i = 0;
+    while (expression[i])
+    {
+        if (expression[i] != ' ' && expression[i] != '\t')
+            return (true);
+        i++;
+    }
+    std::cout << "Error" << std::endl;
+    return (false);
+}
+
 bool checkIsValid(std::string expression)
 {
+    if (containOnlySpaces(expression) == false)
+        return (false);
     if (expression.empty())
     {
         std::cout << "Error" << std::endl;
         return (false);
     }
-    if (expression.size() < 3)
+    if (expression.size() < 3) 
     {
         std::cout << "Error" << std::endl;
         return (false);

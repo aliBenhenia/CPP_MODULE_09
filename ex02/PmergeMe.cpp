@@ -122,9 +122,9 @@ void PmergeMe::splitPairs()
 
 void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
 {
-    if (start == end && mid == end) // if the array has only one element
+    if (start == end && mid == end) // if the array has only one element ..mean 2 elements ? 
         return;
-    size_t lenArr1 = mid - start + 1;
+    size_t lenArr1 = mid - start + 1; // +1 for index starting from 0
     size_t lenArr2 = end - mid;
     size_t i = 0;
     std::vector<std::pair<int, int> > leftArr(lenArr1);
@@ -144,7 +144,6 @@ void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t star
     }
     size_t idxArr1 = 0;
     size_t idxArr2 = 0;
-
     size_t idxMerged = start;                      // for the merged array strating from the start index
     while (idxArr1 < lenArr1 && idxArr2 < lenArr2) // merge the two parts of array
     {
@@ -200,13 +199,13 @@ void PmergeMe::fillMainChainAndPend()
     {
         if (isFirstIteration)
         {
-            mainChain.push_back(it->second);
+            mainChain.push_back(it->second);// add the second element of pair in the main chain 
             mainChain.push_back(it->first);
             pendChain.push_back(it->second);
             isFirstIteration = false;
             continue;
         }
-        mainChain.push_back(it->first);
+        mainChain.push_back(it->first); 
         pendChain.push_back(it->second);
     }
 }
@@ -259,7 +258,6 @@ void PmergeMe::createComb()
             break;
         i++; // increment the index of jacob sequence
     } 
-
 }
 
 void PmergeMe::sortingResult()
@@ -295,16 +293,11 @@ void PmergeMe::printBeforeSort()
 void PmergeMe::start_vector(int ac, char *av[])
 {
     if (parseNumbers(ac, av) == false)
-    {
-        // std::cerr << "invalid input ...plz enter correct input" << std::endl;
-        numbers.clear();
-        // return;
         throw "invalid input ...plz enter correct input";
-    }
-    // printBeforeSort();
-    start1 = std::clock();
+    printBeforeSort();
+    start1 = std::clock(); // get the start time of the process
     splitPairs();
-    MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1);
+    MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1); // -1 for the last element of pair because the index starting from 0 
     fillMainChainAndPend();
     sortingResult();
     if (lastNumber != -1)
@@ -315,9 +308,6 @@ void PmergeMe::start_vector(int ac, char *av[])
     }
     end1 = std::clock();
     printNumbers();
-    // print the time complexity
-    // double time = (double)(end - start) / CLOCKS_PER_SEC;
-    // std::cout << "Time complexity: " << time << " seconds" << std::endl;
 }
 
 void PmergeMe::splitPairsDeque()
