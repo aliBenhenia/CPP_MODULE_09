@@ -29,6 +29,12 @@ bool containOnlySpaces(std::string expression)
     return (false);
 }
 
+bool onlyNumbers(std::string expression)
+{
+    (void)expression;
+    return (true);
+}
+
 bool checkIsValid(std::string expression)
 {
     if (containOnlySpaces(expression) == false)
@@ -38,9 +44,9 @@ bool checkIsValid(std::string expression)
         std::cout << "Error" << std::endl;
         return (false);
     }
-    if (expression.size() < 3) 
+    if (expression.size() < 3)
     {
-        std::cout << "Error" << std::endl;
+        std::cout << "Error --" << std::endl;
         return (false);
     }
     int i = 0;
@@ -52,10 +58,11 @@ bool checkIsValid(std::string expression)
             return (false);
         }
         if (std::isdigit(expression[i]) 
-            || expression[i] == '+' 
-            || expression[i] == '-' 
-            || expression[i] == '*' 
-            || expression[i] == '/' || expression[i] == ' ' || expression[i] == '\t')
+            || (expression[i] == '+')
+            || (expression[i] == '-')
+            || (expression[i] == '*')
+            || (expression[i] == '/')
+            || expression[i] == ' ' || expression[i] == '\t')
         {
             i++;
         }
@@ -79,7 +86,8 @@ void RBN::calculeNumbers(char c)
 {
     int x;
     int y;
-
+    if (this->numbers.size() < 2)
+        throw "Error not enough numbers to calculate";
     x = this->numbers.top();
     this->numbers.pop();
     y = this->numbers.top();
@@ -91,7 +99,11 @@ void RBN::calculeNumbers(char c)
     else if (c == '*')
         this->numbers.push(x * y);
     else if (c == '/')
+    {
+        if (x == 0)
+            throw "Error cant devide on 0";
         this->numbers.push(y / x);
+    }
 }
 void RBN::start(std::string expression)
 {
@@ -111,6 +123,8 @@ void RBN::start(std::string expression)
             calculeNumbers(expression[i]);
         i++;
     }
+    if (this->numbers.size() != 1)
+        throw "Error";
     std::cout << this->numbers.top() << std::endl;
 }
 

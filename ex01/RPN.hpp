@@ -14,10 +14,10 @@ class RBN
         RBN &operator=(const RBN &other);
         void start(std::string expression);
         void calculeNumbers(char c);
-        // bool checkIsValid(std::string expression);
         ~RBN();
 };
 bool isOpertor(char c);
 bool containOnlySpaces(std::string expression);
+bool onlyNumbers(std::string expression);
 bool checkIsValid(std::string expression);
 #endif
