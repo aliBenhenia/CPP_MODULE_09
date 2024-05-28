@@ -1,7 +1,7 @@
 #include "BitcoinExchange.hpp"
 std::string trimSpaces(std::string str)
 {
-    size_t start = str.find_first_not_of(" ");
+    size_t start = str.find_first_not_of(" ");// return the first index of the first non space character 
     size_t end = str.find_last_not_of(" ");
     return str.substr(start, end - start + 1);
 }
@@ -59,18 +59,18 @@ void BitcoinExchange :: parseDataBase(std::string db)
 double BitcoinExchange :: getClosestValue(std::string date)
 {
     std::map<std::string, double>::iterator it = btc_db.begin();
-    double closestValue = it->second;
-    for (std::map<std::string, double>::iterator it = btc_db.begin(); it != btc_db.end(); ++it)
+    double closestValue = it->second; // get the first value in the map beacuse it is the closest
+    for (std::map<std::string, double>::iterator it = btc_db.begin(); it != btc_db.end(); it++)
     {
-        if (it->first > date)
+        if (it->first > date) // if the date is greater than the date in the map
             break;
         closestValue = it->second;
     }
-    return closestValue;
+    return (closestValue);
 }
+
 bool isValidDateFormat(std::string date)
 {
-   // tream spaces from the beginning
     if (date.length() != 10)
         return (false);
     if (date[4] != '-' || date[7] != '-')
@@ -104,12 +104,12 @@ bool BitcoinExchange::checkValidDate(std::string date)
         if (dateObj.day < 1 || dateObj.day > 29)
             return (false);
     }
-    else if (dateObj.month == 2)
+    else if (dateObj.month == 2)// non leap year
     {
         if (dateObj.day < 1 || dateObj.day > 28)
             return (false); // ivnalid day for month in non leap year
     }
-    if (isMonthsWith31Days(dateObj.month) == (true))
+    if (isMonthsWith31Days(dateObj.month) == (true))// months with 31 days in a month in a non leap year
     {
         if (dateObj.day < 1 || dateObj.day > 31)
             return (false);

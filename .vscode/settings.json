@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "iosfwd": "cpp",
+        "utility": "cpp",
+        "vector": "cpp",
+        "algorithm": "cpp",
+        "__config": "cpp"
+    }
+}
