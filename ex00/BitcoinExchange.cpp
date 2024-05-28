@@ -1,10 +1,9 @@
 #include "BitcoinExchange.hpp"
-std::string trimDate(const std::string& str, const std::string& chars = " \t\n\r") {
-   // rm  spaces from the beginning
-    size_t start = str.find_first_not_of(chars);
-    if (start == std::string::npos)
-        return "";
-    return str.substr(start, str.find_last_not_of(chars) - start + 1);
+std::string trimSpaces(std::string str)
+{
+    size_t start = str.find_first_not_of(" ");
+    size_t end = str.find_last_not_of(" ");
+    return str.substr(start, end - start + 1);
 }
 
 BitcoinExchange::BitcoinExchange()
@@ -71,13 +70,12 @@ double BitcoinExchange :: getClosestValue(std::string date)
 }
 bool isValidDateFormat(std::string date)
 {
-    if (date < "2009-01-02" || date > "2022-03-29")
-        return (false);
-    if (date.length() != 11)
+   // tream spaces from the beginning
+    if (date.length() != 10)
         return (false);
     if (date[4] != '-' || date[7] != '-')
         return (false);
-    return ((true));
+    return (true);
 }
 
 Date parseDateStr(std::string date)
@@ -94,6 +92,7 @@ Date parseDateStr(std::string date)
 
 bool BitcoinExchange::checkValidDate(std::string date)
 {
+    date = trimSpaces(date);
     if(isValidDateFormat(date) == (false))
         return (false);
     Date dateObj = parseDateStr(date);
@@ -125,12 +124,13 @@ bool BitcoinExchange::checkValidDate(std::string date)
 bool BitcoinExchange::checkValidFormat(std::string line)
 {
     size_t pos = line.find('|');
-    if (pos == std::string::npos)
+    if (pos == std::string::npos)// if invalid pos
         return (false);
-    if (pos == 0 || pos == line.length() - 1)
+    if (pos == 0 || pos == line.length() - 1) // if pos is at the beginning or end
         return (false);
     return (true);
 }
+
 bool BitcoinExchange::checkValidValue(double value)
 {
     if (value < 0)
@@ -148,9 +148,10 @@ bool BitcoinExchange::checkValidValue(double value)
 
 void BitcoinExchange::diplayResult(std::string date, double value)
 {
+    date = trimSpaces(date);
     double closestValue = getClosestValue(date);
     double result = value * closestValue;
-    std::cout << date << " | " << value << " | " << closestValue << " | " << result << std::endl;
+    std::cout << date << " => " << value << " = "  << result << std::endl;
 }
 
 void BitcoinExchange :: processInputFile(std::string db)

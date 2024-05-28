@@ -44,7 +44,6 @@ class BitcoinExchange
                 std::cout << "(" << it->first << ")"<< std::endl;
         }
         ~BitcoinExchange();
-       
 };
 
 #endif
