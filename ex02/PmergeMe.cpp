@@ -73,11 +73,11 @@ bool PmergeMe::isEven(size_t index)
     return (false);
 }
 
-// alg Ford-Johnson algorithm merge-insert sort algorithm
+
 void PmergeMe::SortPairs()
 {
     size_t i = 0;
-    if (isOdd(numbers.size()))// if the number of elements is odd mean the last element is not in pair
+    if (isOdd(numbers.size()))
     {
         this->lastNumber = numbers.back();
         numbers.pop_back();
@@ -86,10 +86,8 @@ void PmergeMe::SortPairs()
         this->lastNumber = -1;
     while (i < numbers.size() - 1)
     {
-        // if (i % 2 == 0 && numbers[i] < numbers[i + 1])// for the first element of pair
-        //     std::swap(numbers[i], numbers[i + 1]);
-        if (numbers[i] < numbers[i + 1]) // for the first element of pair mean the first element is less than the second element
-            std::swap(numbers[i], numbers[i + 1]); // swap the two elements
+        if (numbers[i] < numbers[i + 1]) 
+            std::swap(numbers[i], numbers[i + 1]); 
         i += 2;
     }
 }
@@ -97,79 +95,79 @@ void PmergeMe::SortPairs()
 void PmergeMe::splitPairs()
 {
     size_t i = 0;
-    if (isOdd(numbers.size()))// if the number of elements is odd mean the last element is not in pair
+    if (isOdd(numbers.size()))
     {
         this->lastNumber = numbers.back();
         numbers.pop_back();
     }
     else
         this->lastNumber = -1;
-    while (i < numbers.size() - 1) // -1 for the last element of pair
+    while (i < numbers.size() - 1) 
     {
-        if (isEven(i)) // for the first element of pair
+        if (isEven(i)) 
             PairNumbers.push_back(std::make_pair(numbers[i], numbers[i + 1]));
         i++;
     }
     i = 0;
-    // sort the pair numbers
+    
     while (i < PairNumbers.size())
     {
-        if (PairNumbers[i].first < PairNumbers[i].second) // for the first element of pair mean the first element is greater than the second element
-            std::swap(PairNumbers[i].first, PairNumbers[i].second); // swap the two elements
+        if (PairNumbers[i].first < PairNumbers[i].second) 
+            std::swap(PairNumbers[i].first, PairNumbers[i].second); 
         i++;
     }
 }
 
 void PmergeMe::Merge(std::vector<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
 {
-    if (start == end && mid == end) // if the array has only one element ..mean 2 elements ? 
+    if (start == end && mid == end) 
         return;
-    size_t lenArr1 = mid - start + 1; // +1 for index starting from 0
+    size_t lenArr1 = mid - start + 1; 
     size_t lenArr2 = end - mid;
     size_t i = 0;
     std::vector<std::pair<int, int> > leftArr(lenArr1);
     std::vector<std::pair<int, int> > rightArr(lenArr2);
 
-    // copy the left part of array
-    while (i < lenArr1) // copy the left part of array
+    
+    while (i < lenArr1) 
     {
         leftArr[i] = PairNumbers[start + i];
         i++;
     }
     i = 0;
-    while (i < lenArr2) // copy the right part of array
+    while (i < lenArr2) 
     {
         rightArr[i] = PairNumbers[mid + 1 + i];
         i++;
     }
     size_t idxArr1 = 0;
     size_t idxArr2 = 0;
-    size_t idxMerged = start;                      // for the merged array strating from the start index
-    while (idxArr1 < lenArr1 && idxArr2 < lenArr2) // merge the two parts of array
+    size_t idxMerged = start;                      
+    while (idxArr1 < lenArr1 && idxArr2 < lenArr2) 
     {
-        if (leftArr[idxArr1].first <= rightArr[idxArr2].first) // compare the first element of pair
+        if (leftArr[idxArr1].first <= rightArr[idxArr2].first) 
         {
-            PairNumbers[idxMerged] = leftArr[idxArr1]; // copy the left part of array
-            idxArr1++;                                 // increment the index of left part of array
+            PairNumbers[idxMerged] = leftArr[idxArr1]; 
+            idxArr1++;                                 
         }
         else
         {
-            PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the right part of array
-            idxArr2++;                                  // increment the index of right part of array
+            PairNumbers[idxMerged] = rightArr[idxArr2]; 
+            idxArr2++;                                  
         }
-        idxMerged++; // increment the index of merged array
+        idxMerged++; 
     }
-    while (idxArr1 < lenArr1) // if there are remaining elements in the left part of array
+    while (idxArr1 < lenArr1) 
     {
-        PairNumbers[idxMerged] = leftArr[idxArr1]; // copy the remaining elements of left part of array
-        idxArr1++;                                 // increment the index of left part of array
-        idxMerged++;                               // increment the index of merged array
+        PairNumbers[idxMerged] = leftArr[idxArr1]; 
+        idxArr1++;                                 
+        idxMerged++;                               
     }
-    while (idxArr2 < lenArr2) // if there are remaining elements in the right part of array
+    while (idxArr2 < lenArr2) 
     {
-        PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the remaining elements of right part of array
-        idxArr2++;                                  // increment the index of right part of array
-        idxMerged++;                                // increment the index of merged array
+        PairNumbers[idxMerged] = rightArr[idxArr2]; 
+        idxArr2++;                                  
+        idxMerged++;                                
     }
 }
 
@@ -182,12 +180,12 @@ void PmergeMe::MergeSortPair(std::vector<std::pair<int, int> > &PairNumbers, siz
 {
     size_t mid;
 
-    if (start >= end) // if the array has only one element
+    if (start >= end) 
         return;
-    mid = getMiddle(start, end);          // for divide the array into two parts
-    MergeSortPair(PairNumbers, start, mid);   // for left part of array .. recursive call .. divide and conquer
-    MergeSortPair(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
-    Merge(PairNumbers, start, mid, end);      // merge the two parts of array .. conquer .. merge  the two parts of array
+    mid = getMiddle(start, end);          
+    MergeSortPair(PairNumbers, start, mid);   
+    MergeSortPair(PairNumbers, mid + 1, end); 
+    Merge(PairNumbers, start, mid, end);      
 }
 
 void PmergeMe::fillMainChainAndPend()
@@ -199,7 +197,7 @@ void PmergeMe::fillMainChainAndPend()
     {
         if (isFirstIteration)
         {
-            mainChain.push_back(it->second);// add the second element of pair in the main chain 
+            mainChain.push_back(it->second);
             mainChain.push_back(it->first);
             pendChain.push_back(it->second);
             isFirstIteration = false;
@@ -212,7 +210,7 @@ void PmergeMe::fillMainChainAndPend()
 
 void PmergeMe::printNumbers()
 {
-    // print main chain and pend chain
+    
     std::vector<int>::iterator it;
     std::vector<int>::iterator it2;
     std::cout << "after : ";
@@ -223,61 +221,69 @@ void PmergeMe::printNumbers()
 
 std::vector<int> PmergeMe::genertaingJacobSequence()
 {
-    size_t i = 2;
-
     std::vector<int> jacobNumbers;
-    jacobNumbers.push_back(0);
+    jacobNumbers.push_back(0); 
     jacobNumbers.push_back(1);
-
-    while (i < 20)
-    {
-        jacobNumbers.push_back(jacobNumbers[i - 1] + (2 * jacobNumbers[i - 2]));
-        i++;
-    }
-    jacobNumbers.erase(jacobNumbers.begin() + 1); // remove the first element of jacob sequence because the first element of jacob sequence is already added in the main chain
+    jacobNumbers.push_back(3); 
+    jacobNumbers.push_back(5);
+    jacobNumbers.push_back(11); 
+    jacobNumbers.push_back(21);
+    jacobNumbers.push_back(43);
+    jacobNumbers.push_back(85); 
+    jacobNumbers.push_back(171); 
+    jacobNumbers.push_back(341);
+    jacobNumbers.push_back(683);
+    jacobNumbers.push_back(1365); 
+    jacobNumbers.push_back(2731); 
+    jacobNumbers.push_back(5461);   
+    jacobNumbers.push_back(10923);   
+    jacobNumbers.push_back(21845);  
+    jacobNumbers.push_back(43691);  
+    jacobNumbers.push_back(87381);   
+    jacobNumbers.push_back(174763);  
     return (jacobNumbers);
 }
 
 void PmergeMe::createComb()
 {
-    std::vector<int> jacobNumbers = genertaingJacobSequence(); // generate the jacob sequence
+    std::vector<int> jacobNumbers = genertaingJacobSequence(); 
 
-    combination.push_back(0); // add the first element of jacob sequence
+    combination.push_back(0); 
 
-    int i = 1; // for the index of jacob sequence starting from the second element
-    while (i < 20) // for the jacob sequence until the 20th element beacuse the jacob sequence has 20 elements
+    int i = 1; 
+    while (i < 20) 
     {
-        combination.push_back(jacobNumbers[i]); // add the element of jacob sequence
-        int j = jacobNumbers[i - 1] + 1; // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence 
-        while (j < jacobNumbers[i]) // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence
+        combination.push_back(jacobNumbers[i]); 
+        int j = jacobNumbers[i - 1] + 1; 
+        while (j < jacobNumbers[i]) 
         {
-            combination.push_back(j); // add the elements between the first element of jacob sequence and the next element of jacob sequence
+            combination.push_back(j); 
             j++; 
         }
-        if (combination.size() >= pendChain.size()) // if the combination size is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size
+        if (combination.size() >= pendChain.size()) 
             break;
-        i++; // increment the index of jacob sequence
+        i++; 
     } 
 }
 
 void PmergeMe::sortingResult()
 {
-    createComb(); // create the combination based on the jacob sequence
-    size_t i = 1; // for the index of combination starting from the second element because the first element of combination is already added in the main chain
+    createComb(); 
+    size_t i = 1; 
 
-    std::vector<int>::iterator it; // for the iterator of main chain
-    int combIndex; // for the index of combination
-    while (i < combination.size()) // for the combination until the last element of combination
+    std::vector<int>::iterator it; 
+    int combIndex; 
+    while (i < combination.size()) 
     {
-        combIndex = combination.at(i); // get the index of combination
-        if (combIndex >= (int)pendChain.size()) // if the index of combination is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size and we skip the element of pend chain
+        combIndex = combination.at(i); 
+        if (combIndex >= (int)pendChain.size()) 
         {
-            i++; // increment the index of combination because we skip the element of pend chain
-            continue; // skip the element of pend chain
+            i++; 
+            continue; 
         }
-        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); // find the position of the element of pend chain in the main chain the lower_bound return the iterator of the first element that is not less than the element of pend chain
-        mainChain.insert(it, pendChain.at(combIndex)); // insert the element of pend chain in the main chain
-        i++; // increment the index of combination
+        it = std::lower_bound(mainChain.begin(), mainChain.end(), pendChain.at(combIndex)); 
+        mainChain.insert(it, pendChain.at(combIndex)); 
+        i++; 
     }
 }
 
@@ -295,9 +301,9 @@ void PmergeMe::start_vector(int ac, char *av[])
     if (parseNumbers(ac, av) == false)
         throw "invalid input ...plz enter correct input";
     printBeforeSort();
-    start1 = std::clock(); // get the start time of the process
+    start1 = std::clock(); 
     splitPairs();
-    MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1); // -1 for the last element of pair because the index starting from 0 
+    MergeSortPair(this->PairNumbers, 0, this->PairNumbers.size() - 1); 
     fillMainChainAndPend();
     sortingResult();
     if (lastNumber != -1)
@@ -313,25 +319,25 @@ void PmergeMe::start_vector(int ac, char *av[])
 void PmergeMe::splitPairsDeque()
 {
     size_t i = 0;
-    if (isOdd(numbersDeque.size()))// if the number of elements is odd mean the last element is not in pair
+    if (isOdd(numbersDeque.size()))
     {
         this->lastNumberDeque = numbersDeque.back();
         numbersDeque.pop_back();
     }
     else
         this->lastNumberDeque = -1;
-    while (i < numbersDeque.size() - 1) // -1 for the last element of pair
+    while (i < numbersDeque.size() - 1) 
     {
-        if (isEven(i)) // for the first element of pair
+        if (isEven(i)) 
             PairNumbersDeque.push_back(std::make_pair(numbersDeque[i], numbersDeque[i + 1]));
         i++;
     }
     i = 0;
-    // sort the pair numbers
+    
     while (i < PairNumbersDeque.size())
     {
-        if (PairNumbersDeque[i].first < PairNumbersDeque[i].second) // for the first element of pair mean the first element is greater than the second element
-            std::swap(PairNumbersDeque[i].first, PairNumbersDeque[i].second); // swap the two elements
+        if (PairNumbersDeque[i].first < PairNumbersDeque[i].second)
+            std::swap(PairNumbersDeque[i].first, PairNumbersDeque[i].second); 
         i++;
     }
 }
@@ -382,7 +388,7 @@ bool PmergeMe::parseNumbersDeque(int ac, char *av[])
 
 void PmergeMe::printNumbersDeque()
 {
-    // print main chain and pend chain
+    
     std::deque<int>::iterator it;
     std::deque<int>::iterator it2;
     std::cout << "\n main chain: ";
@@ -393,7 +399,7 @@ void PmergeMe::printNumbersDeque()
 
 void PmergeMe ::MergeDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t start, size_t mid, size_t end)
 {
-    if (start == end && mid == end) // if the array has only one element
+    if (start == end && mid == end) 
         return;
     size_t lenArr1 = mid - start + 1;
     size_t lenArr2 = end - mid;
@@ -401,14 +407,14 @@ void PmergeMe ::MergeDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t
     std::deque<std::pair<int, int> > leftArr(lenArr1);
     std::deque<std::pair<int, int> > rightArr(lenArr2);
 
-    // copy the left part of array
-    while (i < lenArr1) // copy the left part of array
+    
+    while (i < lenArr1) 
     {
         leftArr[i] = PairNumbers[start + i];
         i++;
     }
     i = 0;
-    while (i < lenArr2) // copy the right part of array
+    while (i < lenArr2) 
     {
         rightArr[i] = PairNumbers[mid + 1 + i];
         i++;
@@ -416,44 +422,44 @@ void PmergeMe ::MergeDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t
     size_t idxArr1 = 0;
     size_t idxArr2 = 0;
 
-    size_t idxMerged = start;                      // for the merged array strating from the start index
-    while (idxArr1 < lenArr1 && idxArr2 < lenArr2) // merge the two parts of array
+    size_t idxMerged = start;                      
+    while (idxArr1 < lenArr1 && idxArr2 < lenArr2) 
     {
-        if (leftArr[idxArr1].first <= rightArr[idxArr2].first) // compare the first element of pair
+        if (leftArr[idxArr1].first <= rightArr[idxArr2].first) 
         {
-            PairNumbers[idxMerged] = leftArr[idxArr1]; // copy the left part of array
-            idxArr1++;                                 // increment the index of left part of array
+            PairNumbers[idxMerged] = leftArr[idxArr1]; 
+            idxArr1++;                                 
         }
         else
         {
-            PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the right part of array
-            idxArr2++;                                  // increment the index of right part of array
+            PairNumbers[idxMerged] = rightArr[idxArr2]; 
+            idxArr2++;                                  
         }
-        idxMerged++; // increment the index of merged array
+        idxMerged++; 
     }
-    while (idxArr1 < lenArr1) // if there are remaining elements in the left part of array
+    while (idxArr1 < lenArr1) 
     {
-        PairNumbers[idxMerged] = leftArr[idxArr1]; // copy the remaining elements of left part of array
-        idxArr1++;                                 // increment the index of left part of array
-        idxMerged++;                               // increment the index of merged array
+        PairNumbers[idxMerged] = leftArr[idxArr1]; 
+        idxArr1++;                                 
+        idxMerged++;                               
     }
-    while (idxArr2 < lenArr2) // if there are remaining elements in the right part of array
+    while (idxArr2 < lenArr2) 
     {
-        PairNumbers[idxMerged] = rightArr[idxArr2]; // copy the remaining elements of right part of array
-        idxArr2++;                                  // increment the index of right part of array
-        idxMerged++;                                // increment the index of merged array
+        PairNumbers[idxMerged] = rightArr[idxArr2]; 
+        idxArr2++;                                  
+        idxMerged++;                                
     }
 }
 void PmergeMe::MergeSortPairDeque(std::deque<std::pair<int, int> > &PairNumbers, size_t start, size_t end)
 {
     size_t mid;
 
-    if (start >= end) // if the array has only one element
+    if (start >= end) 
         return;
-    mid = getMiddle(start, end);          // for divide the array into two parts
-    MergeSortPairDeque(PairNumbers, start, mid);   // for left part of array .. recursive call .. divide and conquer
-    MergeSortPairDeque(PairNumbers, mid + 1, end); // for right part of array .. recursive call .. divide and conquer
-    MergeDeque(PairNumbers, start, mid, end);      // merge the two parts of array .. conquer .. merge  the two parts of array
+    mid = getMiddle(start, end);          
+    MergeSortPairDeque(PairNumbers, start, mid);   
+    MergeSortPairDeque(PairNumbers, mid + 1, end); 
+    MergeDeque(PairNumbers, start, mid, end);      
 }
 
 void PmergeMe::fillMainChainAndPendDeque()
@@ -478,44 +484,44 @@ void PmergeMe::fillMainChainAndPendDeque()
 
 void PmergeMe::createCombDeque()
 {
-    std::vector<int> jacobNumbers = genertaingJacobSequence(); // generate the jacob sequence
+    std::vector<int> jacobNumbers = genertaingJacobSequence(); 
 
-    combinationDeque.push_back(0); // add the first element of jacob sequence
+    combinationDeque.push_back(0); 
 
-    int i = 1; // for the index of jacob sequence starting from the second element
-    while (i < 20) // for the jacob sequence until the 20th element beacuse the jacob sequence has 20 elements
+    int i = 1; 
+    while (i < 20) 
     {
-        combinationDeque.push_back(jacobNumbers[i]); // add the element of jacob sequence
-        int j = jacobNumbers[i - 1] + 1; // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence 
-        while (j < jacobNumbers[i]) // for the index of jacob sequence starting from the first element of jacob sequence and increment by 1 for the next element of jacob sequence until the current element of jacob sequence be less than the next element of jacob sequence in the jacob sequence
+        combinationDeque.push_back(jacobNumbers[i]); 
+        int j = jacobNumbers[i - 1] + 1; 
+        while (j < jacobNumbers[i]) 
         {
-            combinationDeque.push_back(j); // add the elements between the first element of jacob sequence and the next element of jacob sequence
+            combinationDeque.push_back(j); 
             j++; 
         }
-        if (combinationDeque.size() >= pendChainDeque.size()) // if the combination size is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size
+        if (combinationDeque.size() >= pendChainDeque.size()) 
             break;
-        i++; // increment the index of jacob sequence
+        i++; 
     }
 }
 
 void PmergeMe::sortingResultDeque()
 {
-    createCombDeque(); // create the combination based on the jacob sequence
-    size_t i = 1; // for the index of combination starting from the second element because the first element of combination is already added in the main chain
+    createCombDeque(); 
+    size_t i = 1; 
 
-    std::deque<int>::iterator it; // for the iterator of main chain
-    int combIndex; // for the index of combination
-    while (i < combination.size()) // for the combination until the last element of combination
+    std::deque<int>::iterator it; 
+    int combIndex; 
+    while (i < combination.size()) 
     {
-        combIndex = combination.at(i); // get the index of combination
-        if (combIndex >= (int)pendChainDeque.size()) // if the index of combination is greater than or equal to the pend chain size becasue the pend chain size is less than the combination size and we skip the element of pend chain
+        combIndex = combination.at(i); 
+        if (combIndex >= (int)pendChainDeque.size()) 
         {
-            i++; // increment the index of combination because we skip the element of pend chain
-            continue; // skip the element of pend chain
+            i++; 
+            continue; 
         }
-        it = std::lower_bound(mainChainDeque.begin(), mainChainDeque.end(), pendChainDeque.at(combIndex)); // find the position of the element of pend chain in the main chain
-        mainChainDeque.insert(it, pendChainDeque.at(combIndex)); // insert the element of pend chain in the main chain
-        i++; // increment the index of combination
+        it = std::lower_bound(mainChainDeque.begin(), mainChainDeque.end(), pendChainDeque.at(combIndex)); 
+        mainChainDeque.insert(it, pendChainDeque.at(combIndex)); 
+        i++; 
     }
 }
 
@@ -549,9 +555,9 @@ void PmergeMe::start_deque(int ac, char *av[])
         mainChainDeque.insert(it, lastNumberDeque);
     }
     end2 = std::clock();
-    // print the time complexity
-    // double time = (double)(end - start) / CLOCKS_PER_SEC;
-    // std::cout << "Time complexity: " << time << " seconds" << std::endl;
+    
+    
+    
 }
 
 void PmergeMe::printTimeComplexity()

@@ -10,7 +10,7 @@
 
 class PmergeMe
 {
-    private: // for vector
+    private: 
         std::vector<int> numbers;
         std::vector<std::pair<int, int> > PairNumbers;
         std::vector<int> mainChain;
@@ -24,7 +24,7 @@ class PmergeMe
         std::clock_t start1;
         std::clock_t end1;
 
-    private: // for deque
+    private: 
         std::deque<int> numbersDeque;
         std::deque<std::pair<int, int> > PairNumbersDeque;
         std::deque<int> mainChainDeque;
@@ -58,7 +58,7 @@ class PmergeMe
         bool    isOdd(size_t numberSize);
         bool    isEven(size_t index);
         void printBeforeSort();
-        // for deque
+        
         void start_deque(int ac, char *av[]);
         bool parseNumbersDeque(int ac, char *av[]);
         bool processNumberDeque(std::string input);

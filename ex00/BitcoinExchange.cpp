@@ -1,20 +1,20 @@
 #include "BitcoinExchange.hpp"
 std::string trimSpaces(std::string str)
 {
-    size_t start = str.find_first_not_of(" ");// return the first index of the first non space character 
+    size_t start = str.find_first_not_of(" ");
     size_t end = str.find_last_not_of(" ");
     return str.substr(start, end - start + 1);
 }
 
 BitcoinExchange::BitcoinExchange()
 {
-    // std::cout << "default constructor" << std::endl;
+    
 }
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange &obj)
 {
     this->btc_db = obj.btc_db;
-    // std::cout << "copy constructor" << std::endl;
+    
 }
 
 BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange &obj)
@@ -23,7 +23,7 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange &obj)
     std::cout << "copy assignement" << std::endl;
     return (*this);
 }
-// member functions
+
 void BitcoinExchange :: parseDataBase(std::string db)
 {
     std::ifstream   fileDb;
@@ -35,11 +35,11 @@ void BitcoinExchange :: parseDataBase(std::string db)
     fileDb.open(db);
     if (fileDb.is_open() == 0)
         throw std::runtime_error("error : can't open a DB file");
-    std::getline(fileDb, line); // ignore header
+    std::getline(fileDb, line); 
     while (std::getline(fileDb, line))
     {
         pos = line.find(',');
-        if (pos != std::string::npos) // check is valid pos
+        if (pos != std::string::npos) 
         {
             std::string date_str, price_str;
             date_str = line.substr(0, pos);
@@ -49,7 +49,7 @@ void BitcoinExchange :: parseDataBase(std::string db)
             {
                 std::cout << "Error: failed to parse value for line => " << line << std::endl;
                 continue;
-            }
+            } 
             btc_db[date_str] = value;
         }
     }
@@ -59,10 +59,10 @@ void BitcoinExchange :: parseDataBase(std::string db)
 double BitcoinExchange :: getClosestValue(std::string date)
 {
     std::map<std::string, double>::iterator it = btc_db.begin();
-    double closestValue = it->second; // get the first value in the map beacuse it is the closest
+    double closestValue = it->second; 
     for (std::map<std::string, double>::iterator it = btc_db.begin(); it != btc_db.end(); it++)
     {
-        if (it->first > date) // if the date is greater than the date in the map
+        if (it->first > date) 
             break;
         closestValue = it->second;
     }
@@ -71,7 +71,7 @@ double BitcoinExchange :: getClosestValue(std::string date)
 
 bool isValidDateFormat(std::string date)
 {
-    if (date.length() != 10)
+    if (date.length() != 10 || (date > "2022-03-29") || (date < "2009-01-02"))
         return (false);
     if (date[4] != '-' || date[7] != '-')
         return (false);
@@ -98,18 +98,17 @@ bool BitcoinExchange::checkValidDate(std::string date)
     Date dateObj = parseDateStr(date);
     if (isYear(dateObj.year) == (false) || isMonth(dateObj.month) == (false))
         return (false);
-    // leap year
-    if (dateObj.year % 4 == 0 && dateObj.month == 2) // month is feb == 2
+    if (dateObj.year % 4 == 0 && dateObj.month == 2)
     {
         if (dateObj.day < 1 || dateObj.day > 29)
             return (false);
     }
-    else if (dateObj.month == 2)// non leap year
+    else if (dateObj.month == 2)
     {
         if (dateObj.day < 1 || dateObj.day > 28)
-            return (false); // ivnalid day for month in non leap year
+            return (false); 
     }
-    if (isMonthsWith31Days(dateObj.month) == (true))// months with 31 days in a month in a non leap year
+    if (isMonthsWith31Days(dateObj.month) == (true))
     {
         if (dateObj.day < 1 || dateObj.day > 31)
             return (false);
@@ -124,9 +123,9 @@ bool BitcoinExchange::checkValidDate(std::string date)
 bool BitcoinExchange::checkValidFormat(std::string line)
 {
     size_t pos = line.find('|');
-    if (pos == std::string::npos)// if invalid pos
+    if (pos == std::string::npos)
         return (false);
-    if (pos == 0 || pos == line.length() - 1) // if pos is at the beginning or end
+    if (pos == 0 || pos == line.length() - 1) 
         return (false);
     return (true);
 }
@@ -164,7 +163,7 @@ void BitcoinExchange :: processInputFile(std::string db)
     fileDb.open(db);
     if (fileDb.is_open() == 0)
         throw std::runtime_error("error : can't open a DB file");
-    std::getline(fileDb, line); // ignore header
+    std::getline(fileDb, line); 
     if (line.empty())
         throw std::runtime_error("error : empty file");
     if (line != "date | value")
@@ -198,5 +197,5 @@ void BitcoinExchange :: processInputFile(std::string db)
 
 BitcoinExchange::~BitcoinExchange()
 {
-    // std::cout << "destructor" << std::endl;
+    
 }
